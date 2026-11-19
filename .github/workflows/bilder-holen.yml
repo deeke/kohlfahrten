@@ -1,0 +1,30 @@
+# Hilfsfunktion: lädt die in bilder/urls.txt gelisteten Bilder (von der alten Google-Seite)
+# herunter und legt sie als bilder/orig/<name>.jpg ins Repository.
+name: Bilder holen
+on:
+  push:
+    branches: [main]
+    paths: ['bilder/urls.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Herunterladen
+        run: |
+          mkdir -p bilder/orig
+          while IFS='|' read -r name page url; do
+            [ -z "$name" ] && continue
+            curl -sSL --fail -A "Mozilla/5.0" -o "/tmp/$name" "${url}=w1600" || { echo "::warning::$name fehlgeschlagen"; continue; }
+            convert "/tmp/$name" -auto-orient -resize '1600x1600>' -quality 85 "bilder/orig/$name.jpg" || echo "::warning::$name nicht konvertierbar"
+          done < bilder/urls.txt
+          ls -la bilder/orig
+      - name: Einchecken
+        run: |
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add bilder/orig
+          git diff --cached --quiet || git commit -m "Bilder von der Google-Seite übernommen"
+          git push
