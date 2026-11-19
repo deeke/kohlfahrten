@@ -18,7 +18,7 @@ jobs:
           mkdir -p bilder/orig
           while IFS='|' read -r name page url; do
             [ -z "$name" ] && continue
-            curl -sSL --fail -A "Mozilla/5.0" -o "/tmp/$name" "${url}=w1600" || { echo "::warning::$name fehlgeschlagen"; continue; }
+            curl -sSL --fail -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36" -e "https://sites.google.com/view/kohlfahrten-de/$page" -H "Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8" -o "/tmp/$name" "${url}=w1600" || { echo "::warning::$name fehlgeschlagen"; continue; }
             convert "/tmp/$name" -auto-orient -resize '1600x1600>' -quality 85 "bilder/orig/$name.jpg" || echo "::warning::$name nicht konvertierbar"
           done < bilder/urls.txt
           ls -la bilder/orig
