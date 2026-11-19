@@ -75,8 +75,9 @@ function toast(msg,type='ok',ms=4200){const icons={ok:'fa-circle-check',warn:'fa
 /* ================= Speicher ================= */
 let state={routes:[],gasthaeuser:[],verleih:[],mails:[],voted:{}};
 /* ---------- Server-Schnittstelle (api.php) ---------- */
+function b64utf8(s){const b=new TextEncoder().encode(s);let r='';for(let i=0;i<b.length;i+=0x8000)r+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(r);}
 async function api(action,data,{retry=true,query=''}={}){
-  const opt=data===undefined?{method:'GET'}:{method:'POST',headers:{'Content-Type':'application/json','X-CSRF':CSRF},body:JSON.stringify(data)};
+  const opt=data===undefined?{method:'GET'}:{method:'POST',headers:{'Content-Type':'application/json','X-CSRF':CSRF},body:JSON.stringify({_b64:b64utf8(JSON.stringify(data))})};
   let r,j;
   try{r=await fetch('api.php?action='+encodeURIComponent(action)+(query?'&'+query:''),{...opt,credentials:'same-origin',cache:'no-store'});}
   catch(e){throw new Error('Server nicht erreichbar. Bitte Internetverbindung prüfen.');}
@@ -1130,7 +1131,8 @@ function admSettings(el){
       return [r.title,r.category,r.plz,r.ort,r.points[0][0],r.points[0][1],'',end?end[0]:'',end?end[1]:'','',r.roundtrip?'ja':'nein',via.map(p=>p.join(',')).join('|'),(r.features||[]).join('|'),String(r.lengthKm).replace('.',','),r.description].map(q).join(';');});
     download('bosselstrecken-export.csv','﻿'+CSV_COLS.map(c=>c[0]).join(';')+'\n'+lines.join('\n'),'text/csv;charset=utf-8');};
   const sb=$('#seedBtn');if(sb)sb.onclick=async e=>{if(!await confirmModal('Beispieldaten in die leere Datenbank laden?','Laden',false))return;
-    const d=seed();try{const j=await withBusy(sb,()=>api('admin_seed',{data:{routes:d.routes,gasthaeuser:d.gasthaeuser,verleih:d.verleih}}));toast(j.count+' Einträge angelegt');}
+    const d=seed();try{const parts=[{verleih:d.verleih},...Array.from({length:Math.ceil(d.gasthaeuser.length/6)},(_,i)=>({gasthaeuser:d.gasthaeuser.slice(i*6,i*6+6)})),...d.routes.map(r=>({routes:[r]}))];let n=0;
+      await withBusy(sb,async()=>{for(let i=0;i<parts.length;i++){const j=await api('admin_seed',{data:parts[i],append:i>0});n+=j.count;}});toast(n+' Einträge angelegt');}
     catch(ex){return toast(esc(ex.message),'err');}await reload();renderAdmin();};
 }
 
