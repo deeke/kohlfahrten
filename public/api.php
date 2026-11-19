@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-const APP_VERSION = '1.0.1';
+const APP_VERSION = '1.0.2';
 const MAX_PHOTOS  = 2;
 const RAFFLE_END  = '2000-01-01 00:00:00';   // Kein Gewinnspiel auf Kohlfahrten.de (Funktion deaktiviert)
 const MAX_PHOTO_BYTES = 6 * 1024 * 1024;
@@ -258,6 +258,7 @@ function clean(string $type, array $in): array {
             'bossel' => !empty($in['bossel']), 'bosselText' => str($in['bosselText'] ?? '', 1000),
             'region' => in_array($in['region'] ?? '', $regions, true) ? $in['region'] : '',
             'quelle' => url($in['quelle'] ?? ''),
+            'foto' => preg_match('~^(assets/img/fotos/[a-z0-9-]+\.jpg|uploads/[A-Za-z0-9-]+\.(jpg|png|webp))$~', (string)($in['foto'] ?? '')) ? (string)$in['foto'] : '',
             'saal' => numOrEmpty($in['saal'] ?? ''), 'kohlfahrt' => !empty($in['kohlfahrt']),
             'preis' => numOrEmpty($in['preis'] ?? ''), 'saison' => str($in['saison'] ?? '', 60),
             'minPers' => numOrEmpty($in['minPers'] ?? ''), 'kohlText' => str($in['kohlText'] ?? '', 2000),

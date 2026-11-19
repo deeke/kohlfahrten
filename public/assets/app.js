@@ -147,7 +147,7 @@ function seed(){
     R({title:"Apener Mühlenrunde",category:'beides',plz:'26689',ort:"Apen",roundtrip:false,points:[[53.2219, 7.8085], [53.228, 7.795], [53.21708, 7.78596]],geometry:[[53.22188, 7.80847], [53.22264, 7.80725], [53.22259, 7.80707], [53.22204, 7.80565], [53.22069, 7.80435], [53.22027, 7.80305], [53.22085, 7.80289], [53.22125, 7.80256], [53.22329, 7.79998], [53.22374, 7.799], [53.22459, 7.79628], [53.22684, 7.79322], [53.2272, 7.79234], [53.22735, 7.79142], [53.22757, 7.79148], [53.22769, 7.79219], [53.22858, 7.79438], [53.22769, 7.79219], [53.22757, 7.79148], [53.22729, 7.79151], [53.2268, 7.79105], [53.2249, 7.78801], [53.2219, 7.78488], [53.22116, 7.78461], [53.21843, 7.78632], [53.21827, 7.78592], [53.21709, 7.78584]],features:["teer", "feldweg", "flach", "bollerwagen", "ziel"],created:d(9),description:"Kleine Tour durch Augustfehn mit Ziel Hengstforder Mühle – beliebte Einkehr für Kohlfahrten im Ammerland."})
   ];
   routes.forEach(r=>{r.lengthKm=+lineKm(r.geometry).toFixed(2);});
-  const G=(o)=>Object.assign({id:uid(),status:'approved',created:d(20),author:'Redaktion',inkl:[],kohlfahrt:true,bossel:false,bosselText:'',region:'',quelle:'',web:'',telefon:'',email:'',adresse:'',saal:'',preis:'',saison:'',minPers:'',kohlText:''},o);
+  const G=(o)=>Object.assign({id:uid(),status:'approved',created:d(20),author:'Redaktion',inkl:[],kohlfahrt:true,bossel:false,bosselText:'',region:'',quelle:'',web:'',telefon:'',email:'',adresse:'',saal:'',preis:'',saison:'',minPers:'',kohlText:'',foto:''},o);
   const gasthaeuser=[
     /* ---- Emsland ---- */
     G({name:'Hotel Westhus',adresse:'Heeder Straße 66',plz:'26892',ort:'Dörpen',lat:52.96601,lng:7.32136,region:'Emsland',web:'https://www.hotel-westhus.de',quelle:'https://www.hotel-westhus.de',
@@ -172,7 +172,7 @@ function seed(){
     /* ---- Oldenburger Land / Ammerland ---- */
     G({name:'Zum Deutschen Hause',adresse:'Marktplatz 2',plz:'26209',ort:'Hatten-Kirchhatten',lat:53.01789,lng:8.34945,region:'Oldenburger Land',
        kohlText:'Gemeinschaftskohlfahrt mit Musik und Tanz. Bollerwagen werden vom Haus gestellt.',inkl:['gruenkohl','musik','tanz','bollerwagen','saal']}),
-    G({name:'Bümmersteder Krug',adresse:'Sandkruger Str. 180',plz:'26133',ort:'Oldenburg',lat:53.09263,lng:8.21113,region:'Oldenburger Land',
+    G({name:'Bümmersteder Krug',foto:'assets/img/fotos/gh-buemmersteder.jpg',web:'https://www.buemmersteder-krug.de/gruenkohl/',saison:'ab Januar, Fr & Sa ab 18:30 Uhr',adresse:'Sandkruger Str. 180',plz:'26133',ort:'Oldenburg',lat:53.09263,lng:8.21113,region:'Oldenburger Land',
        kohlText:'Beliebtes Kohltour-Ziel: Grünkohl, Musik & Tanz, Kohlkönig-Krönung – auch vegane Grünkohlgerichte.',inkl:['gruenkohl','vegetarisch','musik','tanz','koenig','saal']}),
     G({name:'Gaststätte Zum Drögen Hasen',adresse:'Drögen-Hasen-Weg',plz:'26129',ort:'Oldenburg',lat:53.15101,lng:8.15986,region:'Oldenburger Land',web:'https://www.zum-droegen-hasen.de',
        kohlText:'Gruppenaktionen und Kohlfahrten buchbar.',inkl:['gruenkohl']}),
@@ -189,8 +189,21 @@ function seed(){
        preis:17.5,kohlText:'Ostfriesischer Grünkohl (Preis für das Gericht).',inkl:['gruenkohl']}),
     G({name:'Hotel Restaurant Bootshaus',adresse:'Marscher Weg 18',plz:'26624',ort:'Südbrookmerland-Bedekaspel',lat:53.44317,lng:7.27716,region:'Ostfriesland',
        saison:'Winter',kohlText:'Grünkohl in der Wintersaison am Großen Meer.',inkl:['gruenkohl']}),
+    /* ---- aus dem bisherigen Kohlfahrten.de-Auftritt ---- */
+    G({name:'Aladin Music Hall',adresse:'Hannoversche Straße 11',plz:'28309',ort:'Bremen-Hemelingen',lat:53.0558,lng:8.8853,region:'Bremen',web:'https://rockin-kohlfahrt.de/',foto:'assets/img/fotos/gh-aladin.jpg',
+       kohlText:'„Rockin‘ Kohlfahrt“: Kohlessen mit Kohlkönig-Tanz, danach Party mit DJs bis in die Nacht.',inkl:['gruenkohl','musik','tanz','koenig','saal']}),
+    G({name:'Hotel Backenköhler',adresse:'Dorfring 40',plz:'27777',ort:'Ganderkesee',lat:53.07895,lng:8.55751,region:'Oldenburger Land',web:'https://www.hotel-backenkoehler.de/events.html',foto:'assets/img/fotos/gh-backenkoehler.jpg',
+       kohlText:'Kohlfahrt-Veranstaltungen im Hotel-Restaurant – Termine und Infos auf der Webseite.',inkl:['gruenkohl','saal']}),
+    G({name:'Eckflether Kroog',adresse:'Eckfleth 31',plz:'26931',ort:'Elsfleth',lat:53.22854,lng:8.37306,region:'Wesermarsch',web:'https://eckflether-kroog.de/',foto:'assets/img/fotos/gh-eckfleth.jpg',
+       kohlText:'Grünkohl und Kohlfahrten in der Wesermarsch – Infos und Reservierung über die Webseite.',inkl:['gruenkohl']}),
+    G({name:'Gasthaus Zur Post',adresse:'Hauptstraße 16',plz:'27211',ort:'Bassum-Neubruchhausen',lat:52.84048,lng:8.8415,region:'Sonstige',web:'https://www.gasthaus-zurpost.de/events.html',foto:'assets/img/fotos/gh-zurpost.jpg',
+       saison:'samstags 17:30–24 Uhr',kohlText:'Kohlparty: das volle Programm mit Live-Band und DJ – Pauschaltermine immer samstags.',inkl:['gruenkohl','musik','tanz','saal']}),
+    G({name:'Gasthof Witte',adresse:'Stüher Straße 1',plz:'27777',ort:'Ganderkesee',lat:53.01182,lng:8.50847,region:'Oldenburger Land',web:'https://www.gasthof-witte.com/blank',foto:'assets/img/fotos/gh-witte.jpg',
+       kohlText:'Kohlfahrten und Grünkohlessen – Infos und Reservierung über die Webseite.',inkl:['gruenkohl']}),
+    G({name:'Wardenburger Hof',adresse:'Oldenburger Straße 255',plz:'26203',ort:'Wardenburg',lat:53.06049,lng:8.19784,region:'Oldenburger Land',web:'https://wardenburger-hof.de/kohlfahrten/',foto:'assets/img/fotos/gh-wardenburg.jpg',
+       kohlText:'Kohlfahrten im Hotel Wardenburger Hof – Angebote und Termine auf der Webseite.',inkl:['gruenkohl','saal']}),
     /* ---- Bremen ---- */
-    G({name:'Der Kuhhirte',adresse:'Kuhhirtenweg',plz:'28201',ort:'Bremen',lat:53.06646,lng:8.81589,region:'Bremen',
+    G({name:'Der Kuhhirte',foto:'assets/img/fotos/gh-kuhhirte.jpg',web:'https://www.kohltour-zumkuhhirten.de/',adresse:'Kuhhirtenweg',plz:'28201',ort:'Bremen',lat:53.06646,lng:8.81589,region:'Bremen',
        preis:70,saison:'Jan – März, Fr & Sa',kohlText:'Kohlparty 18–24 Uhr mit Grünkohl, Pinkel, Musik und Tanz – all-inclusive 70 € (Fr) / 75 € (Sa).',inkl:['gruenkohl','pinkel','musik','tanz','saal']}),
     G({name:'Union-Brauerei',adresse:'Theodorstraße',plz:'28219',ort:'Bremen-Walle',lat:53.1009,lng:8.79311,region:'Bremen',
        preis:82.5,saison:'Fr & Sa',kohlText:'Kohlbuffet, Getränke-Flat und DJ.',inkl:['gruenkohl','musik','tanz']}),
@@ -202,7 +215,7 @@ function seed(){
        preis:81.5,kohlText:'Kohlfahrt-Paket im historischen Ratskeller. Bollerwagen können bis Montag abgestellt werden.',inkl:['gruenkohl']}),
     G({name:'Gasthof zum Kaiser Friedrich',adresse:'Lange Wieren 13',plz:'28195',ort:'Bremen',lat:53.07349,lng:8.80894,region:'Bremen',
        preis:19.9,saison:'Okt – Apr',kohlText:'Braunkohlteller (Preis für das Gericht).',inkl:['gruenkohl']}),
-    G({name:"Gartelmann's Gasthof",adresse:'Oberblockland 14',plz:'28357',ort:'Bremen-Blockland',lat:53.14301,lng:8.84733,region:'Bremen',
+    G({name:"Gartelmann's Gasthof",foto:'assets/img/fotos/gh-gartelmann.jpg',web:'https://www.gartelmann-gasthof.de/gasthof/gr%C3%BCnkohl/kohlparty/',adresse:'Oberblockland 14',plz:'28357',ort:'Bremen-Blockland',lat:53.14301,lng:8.84733,region:'Bremen',
        saison:'ab Ende November',kohlText:'Grünkohl-Saison im Blockland – beliebtes Ziel für Kohlfahrten entlang der Wümme.',inkl:['gruenkohl']})
   ];
   const V=(o)=>Object.assign({id:uid(),status:'approved',created:d(15),author:'Redaktion',ausst:[],web:'',telefon:'',email:'',adresse:'',anzahl:'',preisTag:'',preisWE:'',kaution:'',zuladung:'',kisten:'',beschreibung:''},o);
@@ -527,7 +540,7 @@ function renderPremium(){
   const ps=approved('gasthaus').filter(isPremium);
   const free=Math.max(0,3-ps.length);
   $('#premiumHost').innerHTML=ps.map(g=>`<a class="premium" href="${g.web?esc(safeUrl(g.web)):'#gaststaetten'}" ${g.web?'target="_blank" rel="noopener"':''}>
-      ${g.bannerImg?`<img src="${esc(g.bannerImg)}" alt="">`:`<i class="fa-solid fa-utensils pdeco"></i>`}
+      ${g.bannerImg||g.foto?`<img src="${esc(g.bannerImg||g.foto)}" alt="">`:`<i class="fa-solid fa-utensils pdeco"></i>`}
       <span class="pbadge"><i class="fa-solid fa-star"></i> Tipp</span>
       <h3>${esc(g.name)}</h3><p><i class="fa-solid fa-location-dot"></i> ${esc(g.ort)}${g.region?' · '+esc(g.region):''}</p>
       ${g.bannerText?`<p>${esc(g.bannerText)}</p>`:g.kohlfahrt&&g.preis!==''?`<p><i class="fa-solid fa-leaf"></i> Kohlfahrt ab ${fmtEur(g.preis)} p. P.</p>`:''}</a>`).join('')
@@ -556,13 +569,20 @@ function renderStartMap(){
 /* ---------- Werbung bossel.de ---------- */
 function renderAds(){
   $$('.ads[data-ads]').forEach(el=>{const n=+el.dataset.ads||2;const pick=[...ADS].sort(()=>Math.random()-.5).slice(0,n);
-    el.innerHTML=pick.map(a=>`<a class="ad" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="abadge">${esc(a.badge)}</span><img src="assets/img/products/${a.img}.svg" alt="" loading="lazy"><div><b>${esc(a.t)}</b><span class="s">${esc(a.s)}</span><span class="go">${esc(a.btn)} <i class="fa-solid fa-arrow-right"></i></span></div><span class="anz">bossel.de</span></a>`).join('');});
+    el.innerHTML=pick.map(a=>`<a class="ad" href="${esc(a.url)}" target="_blank" rel="noopener"><span class="abadge">${esc(a.badge)}</span><img src="${esc(a.foto||`assets/img/products/${a.img}.svg`)}" alt="" loading="lazy"><div><b>${esc(a.t)}</b><span class="s">${esc(a.s)}</span><span class="go">${esc(a.btn)} <i class="fa-solid fa-arrow-right"></i></span></div><span class="anz">bossel.de</span></a>`).join('');});
+}
+
+/* ---------- Fotogalerien ---------- */
+function renderGalleries(){
+  $$('[data-gallery]').forEach(el=>{if(el.dataset.done)return;const list=PHOTOS[el.dataset.gallery]||[];el.dataset.done=1;
+    el.innerHTML=list.map(([f,t])=>`<figure data-foto="assets/img/fotos/${f}.jpg" data-cap="${esc(t)}"><img src="assets/img/fotos/${f}.jpg" alt="${esc(t)}" loading="lazy"><figcaption>${esc(t)}</figcaption></figure>`).join('');
+    $$('figure',el).forEach(fg=>fg.onclick=()=>openModal(`<img src="${fg.dataset.foto}" alt="" style="width:100%;border-radius:12px;display:block"><p style="margin:10px 0 0;font-weight:700">${fg.dataset.cap}</p>`,{wide:true}));});
 }
 
 /* ---------- Spiele ---------- */
 function gameCard(g){
   const sc=g.shop&&SHOP_CATS.find(c=>c.k===g.shop);
-  return `<div class="game"><div class="gh"><div class="gi"><i class="fa-solid ${g.i}"></i></div><div><h3>${esc(g.t)}</h3><span class="gtag">${esc(g.tag)}</span></div></div>
+  return `<div class="game">${g.foto?`<img class="gfoto" src="${esc(g.foto)}" alt="${esc(g.t)}" loading="lazy">`:''}<div class="gh"><div class="gi"><i class="fa-solid ${g.i}"></i></div><div><h3>${esc(g.t)}</h3><span class="gtag">${esc(g.tag)}</span></div></div>
     <div class="gmeta"><span><i class="fa-solid fa-users"></i> ${esc(g.pers)}</span><span><i class="fa-solid fa-location-dot"></i> ${esc(g.ort)}</span></div>
     <p>${esc(g.d)}</p><div class="gmat"><b><i class="fa-solid fa-box-open" style="color:var(--kf)"></i> Du brauchst:</b> ${esc(g.mat)}</div>
     ${sc?`<a class="gshop" href="${esc(sc.url)}" target="_blank" rel="noopener"><i class="fa-solid fa-store"></i> Passend bei bossel.de: ${esc(sc.t)}</a>`:''}</div>`;
@@ -582,8 +602,8 @@ function renderSpiele(){
 
 /* ---------- Shop ---------- */
 function renderShop(){
-  $('#shopTop').innerHTML=SHOP_CATS.filter(c=>c.top).map(c=>`<a class="shop-feature" href="${esc(c.url)}" target="_blank" rel="noopener"><img src="assets/img/products/${c.img}.svg" alt="" loading="lazy"><div><b>${esc(c.t)}</b><span>${esc(c.d)}</span><span class="go">Zum Shop <i class="fa-solid fa-arrow-up-right-from-square"></i></span></div></a>`).join('');
-  $('#shopHost').innerHTML=SHOP_CATS.map(c=>`<a class="shop-cat" href="${esc(c.url)}" target="_blank" rel="noopener"><i class="fa-solid ${c.i} ic"></i><div><b>${esc(c.t)}</b><span>${esc(c.d)}</span></div></a>`).join('');
+  $('#shopTop').innerHTML=SHOP_CATS.filter(c=>c.top).map(c=>`<a class="shop-feature" href="${esc(c.url)}" target="_blank" rel="noopener"><img src="${esc(c.foto||`assets/img/products/${c.img}.svg`)}" alt="" loading="lazy"><div><b>${esc(c.t)}</b><span>${esc(c.d)}</span><span class="go">Zum Shop <i class="fa-solid fa-arrow-up-right-from-square"></i></span></div></a>`).join('');
+  $('#shopHost').innerHTML=SHOP_CATS.map(c=>`<a class="shop-cat ${c.foto?'has-foto':''}" href="${esc(c.url)}" target="_blank" rel="noopener">${c.foto?`<img class="scfoto" src="${esc(c.foto)}" alt="" loading="lazy">`:`<i class="fa-solid ${c.i} ic"></i>`}<div><b>${esc(c.t)}</b><span>${esc(c.d)}</span></div></a>`).join('');
 }
 
 /* ---------- Banner buchen ---------- */
@@ -738,7 +758,7 @@ function renderEintragen(){
 const ghFilter=new Set();
 function ghCard(g){
   const nR=nearby('route',[g.lat,g.lng]);const prem=isPremium(g);
-  return `<div class="card ecard ${prem?'premium-on':''}" data-id="${g.id}">
+  return `<div class="card ecard ${prem?'premium-on':''}" data-id="${g.id}">${g.bannerImg||g.foto?`<img class="ghfoto" src="${esc(g.bannerImg||g.foto)}" alt="${esc(g.name)}" loading="lazy">`:''}
     ${prem?'<span class="pill" style="background:#ffd84d;color:#3a2600;margin-bottom:6px"><i class="fa-solid fa-star"></i> Tipp der Redaktion</span>':''}
     <h3><i class="fa-solid ${g.bossel?'fa-bowling-ball':'fa-utensils'}" style="color:${g.bossel?'#e65100':g.kohlfahrt?'var(--grass-d)':'var(--brown)'}"></i>${esc(g.name)}</h3>
     <div class="addr"><i class="fa-solid fa-location-dot"></i> ${g.adresse?esc(g.adresse)+', ':''}${esc(g.plz)} ${esc(g.ort)}${g.region?` · <span class="ftag region-tag" style="padding:1px 8px;font-size:.78rem">${esc(g.region)}</span>`:''}${g.saal?` · <i class="fa-solid fa-users"></i> Saal bis ${esc(g.saal)} Pers.`:''}</div>
@@ -1224,7 +1244,7 @@ function route(v){
   $$('.view').forEach(s=>s.classList.toggle('hidden',s.id!=='v-'+current));
   $$('#mainnav a').forEach(a=>a.classList.toggle('active',a.dataset.v===current));
   $('#mainnav').classList.remove('open');
-  try{VIEWS[current]();renderAds();}catch(e){console.error(e);toast('Fehler beim Anzeigen: '+esc(e.message),'err');}
+  try{VIEWS[current]();renderAds();renderGalleries();}catch(e){console.error(e);toast('Fehler beim Anzeigen: '+esc(e.message),'err');}
   window.scrollTo(0,0);
   setTimeout(()=>Object.values(maps).forEach(m=>m&&m.invalidateSize&&m.invalidateSize()),60);
 }
