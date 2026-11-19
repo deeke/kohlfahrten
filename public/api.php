@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 const MAX_PHOTOS  = 2;
 const RAFFLE_END  = '2000-01-01 00:00:00';   // Kein Gewinnspiel auf Kohlfahrten.de (Funktion deaktiviert)
 const MAX_PHOTO_BYTES = 6 * 1024 * 1024;
@@ -75,7 +75,7 @@ function db(): PDO {
 function migrations(): array {
     return [
         1 => [
-            "CREATE TABLE IF NOT EXISTS bs_entries (
+            "CREATE TABLE IF NOT EXISTS kf_entries (
                 id       VARCHAR(24)  NOT NULL PRIMARY KEY,
                 type     VARCHAR(20)  NOT NULL,
                 status   VARCHAR(12)  NOT NULL DEFAULT 'pending',
@@ -89,7 +89,7 @@ function migrations(): array {
                 updated  DATETIME     NOT NULL,
                 KEY idx_type_status (type, status)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
-            "CREATE TABLE IF NOT EXISTS bs_ratings (
+            "CREATE TABLE IF NOT EXISTS kf_ratings (
                 id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 entry_id VARCHAR(24)  NOT NULL,
                 stars    TINYINT      NOT NULL,
@@ -98,7 +98,7 @@ function migrations(): array {
                 UNIQUE KEY uq_vote (entry_id, voter),
                 KEY idx_entry (entry_id)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
-            "CREATE TABLE IF NOT EXISTS bs_mails (
+            "CREATE TABLE IF NOT EXISTS kf_mails (
                 id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 to_addr  VARCHAR(150) NOT NULL,
                 subject  VARCHAR(255) NOT NULL,
@@ -109,7 +109,7 @@ function migrations(): array {
                 error    VARCHAR(255) NULL,
                 created  DATETIME     NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
-            "CREATE TABLE IF NOT EXISTS bs_submissions (
+            "CREATE TABLE IF NOT EXISTS kf_submissions (
                 id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 ip_hash  CHAR(64)     NOT NULL,
                 created  DATETIME     NOT NULL,
@@ -118,7 +118,7 @@ function migrations(): array {
         ],
         2 => [
             // Gewinnspiel: es werden NUR E-Mail und Handynummer gespeichert
-            "CREATE TABLE IF NOT EXISTS bs_raffle (
+            "CREATE TABLE IF NOT EXISTS kf_raffle (
                 id       INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 entry_id VARCHAR(24)  NOT NULL,
                 email    VARCHAR(150) NOT NULL DEFAULT '',
@@ -128,7 +128,7 @@ function migrations(): array {
                 KEY idx_month (month),
                 KEY idx_entry (entry_id)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
-            "CREATE TABLE IF NOT EXISTS bs_raffle_draws (
+            "CREATE TABLE IF NOT EXISTS kf_raffle_draws (
                 id        INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 month     CHAR(7)      NOT NULL,
                 raffle_id INT UNSIGNED NOT NULL,
@@ -139,18 +139,18 @@ function migrations(): array {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
         ],
         3 => [
-            "ALTER TABLE bs_raffle ADD COLUMN name VARCHAR(100) NOT NULL DEFAULT '' AFTER entry_id",
+            "ALTER TABLE kf_raffle ADD COLUMN name VARCHAR(100) NOT NULL DEFAULT '' AFTER entry_id",
         ],
         // 4 => [ "ALTER TABLE ..." ],   <- künftige Updates hier anhängen
     ];
 }
 function migrate(PDO $db): void {
-    $db->exec("CREATE TABLE IF NOT EXISTS bs_meta (k VARCHAR(50) NOT NULL PRIMARY KEY, v VARCHAR(255) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-    $cur = (int)($db->query("SELECT v FROM bs_meta WHERE k='schema'")->fetchColumn() ?: 0);
+    $db->exec("CREATE TABLE IF NOT EXISTS kf_meta (k VARCHAR(50) NOT NULL PRIMARY KEY, v VARCHAR(255) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $cur = (int)($db->query("SELECT v FROM kf_meta WHERE k='schema'")->fetchColumn() ?: 0);
     foreach (migrations() as $n => $sqls) {
         if ($n <= $cur) continue;
         foreach ($sqls as $sql) $db->exec($sql);
-        $db->prepare("REPLACE INTO bs_meta (k, v) VALUES ('schema', ?)")->execute([(string)$n]);
+        $db->prepare("REPLACE INTO kf_meta (k, v) VALUES ('schema', ?)")->execute([(string)$n]);
     }
 }
 
@@ -349,14 +349,14 @@ function rowToItem(array $r, bool $admin): array {
     return $d;
 }
 function getEntry(string $id): ?array {
-    $st = db()->prepare('SELECT * FROM bs_entries WHERE id=?');
+    $st = db()->prepare('SELECT * FROM kf_entries WHERE id=?');
     $st->execute([$id]);
     return $st->fetch() ?: null;
 }
 function insertEntry(string $type, array $d, string $status, string $author = '', string $mail = '', ?int $createdMs = null): string {
     $id = uid();
     $created = $createdMs ? date('Y-m-d H:i:s', intdiv($createdMs, 1000)) : now();
-    db()->prepare('INSERT INTO bs_entries (id,type,status,title,plz,ort,data,author,author_mail,created,updated) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+    db()->prepare('INSERT INTO kf_entries (id,type,status,title,plz,ort,data,author,author_mail,created,updated) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
         ->execute([$id, $type, $status, $d['title'] ?? $d['name'] ?? '', $d['plz'], $d['ort'],
             json_encode($d, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), str($author, 100), str($mail, 150), $created, now()]);
     return $id;
@@ -364,7 +364,7 @@ function insertEntry(string $type, array $d, string $status, string $author = ''
 function ratingsFor(array $ids): array {
     if (!$ids) return [];
     $in = implode(',', array_fill(0, count($ids), '?'));
-    $st = db()->prepare("SELECT entry_id, stars FROM bs_ratings WHERE entry_id IN ($in) ORDER BY id");
+    $st = db()->prepare("SELECT entry_id, stars FROM kf_ratings WHERE entry_id IN ($in) ORDER BY id");
     $st->execute($ids);
     $o = [];
     foreach ($st as $r) $o[$r['entry_id']][] = (int)$r['stars'];
@@ -372,7 +372,7 @@ function ratingsFor(array $ids): array {
 }
 function listAll(): array {
     $admin = isAdmin();
-    $rows = db()->query('SELECT * FROM bs_entries ' . ($admin ? '' : "WHERE status='approved' ") . 'ORDER BY created')->fetchAll();
+    $rows = db()->query('SELECT * FROM kf_entries ' . ($admin ? '' : "WHERE status='approved' ") . 'ORDER BY created')->fetchAll();
     $res = ['routes' => [], 'gasthaeuser' => [], 'verleih' => []];
     $map = ['route' => 'routes', 'gasthaus' => 'gasthaeuser', 'verleih' => 'verleih'];
     $routeIds = array_column(array_filter($rows, fn($r) => $r['type'] === 'route'), 'id');
@@ -388,7 +388,7 @@ function listAll(): array {
             'id' => (int)$m['id'], 'to' => $m['to_addr'], 'subject' => $m['subject'], 'body' => $m['body'],
             'date' => strtotime($m['created']) * 1000, 'sent' => (bool)$m['sent'], 'error' => $m['error'],
             'ref' => $m['ref_type'] ? ['type' => $m['ref_type'], 'id' => $m['ref_id']] : null,
-        ], db()->query('SELECT * FROM bs_mails ORDER BY id DESC LIMIT 200')->fetchAll());
+        ], db()->query('SELECT * FROM kf_mails ORDER BY id DESC LIMIT 200')->fetchAll());
     }
     return $res;
 }
@@ -424,11 +424,11 @@ function checkCaptcha(array $b): void {
     if (!in_array(norm((string)($b['captcha'] ?? '')), $cap['a'], true)) fail('Die Sicherheitsfrage wurde nicht richtig beantwortet.', 400, ['newCaptcha' => true]);
     // Begrenzung: max. 15 Einreichungen pro Stunde und Anschluss
     $ip = ipHash();
-    $st = db()->prepare('SELECT COUNT(*) FROM bs_submissions WHERE ip_hash=? AND created > ?');
+    $st = db()->prepare('SELECT COUNT(*) FROM kf_submissions WHERE ip_hash=? AND created > ?');
     $st->execute([$ip, date('Y-m-d H:i:s', time() - 3600)]);
     if ((int)$st->fetchColumn() >= 15) fail('Zu viele Einträge in kurzer Zeit – bitte später erneut versuchen.', 429);
-    db()->prepare('INSERT INTO bs_submissions (ip_hash, created) VALUES (?, ?)')->execute([$ip, now()]);
-    db()->prepare('DELETE FROM bs_submissions WHERE created < ?')->execute([date('Y-m-d H:i:s', time() - 2 * 86400)]);
+    db()->prepare('INSERT INTO kf_submissions (ip_hash, created) VALUES (?, ?)')->execute([$ip, now()]);
+    db()->prepare('DELETE FROM kf_submissions WHERE created < ?')->execute([date('Y-m-d H:i:s', time() - 2 * 86400)]);
 }
 
 /* ------------------------------------------------------------------ */
@@ -437,7 +437,7 @@ function checkCaptcha(array $b): void {
 function sendMail(string $subject, string $body, ?string $refType = null, ?string $refId = null): array {
     global $CFG;
     $to = $CFG['mail_to'];
-    db()->prepare('INSERT INTO bs_mails (to_addr,subject,body,ref_type,ref_id,created) VALUES (?,?,?,?,?,?)')
+    db()->prepare('INSERT INTO kf_mails (to_addr,subject,body,ref_type,ref_id,created) VALUES (?,?,?,?,?,?)')
         ->execute([$to, mb_substr($subject, 0, 250), $body, $refType, $refId, now()]);
     $mid = (int)db()->lastInsertId();
     $err = null;
@@ -445,7 +445,7 @@ function sendMail(string $subject, string $body, ?string $refType = null, ?strin
         if ($CFG['smtp_host']) smtpSend($to, $subject, $body);
         else phpMail($to, $subject, $body);
     } catch (Throwable $e) { $err = mb_substr($e->getMessage(), 0, 250); error_log('[Kohlfahrten.de] Mail: ' . $err); }
-    db()->prepare('UPDATE bs_mails SET sent=?, error=? WHERE id=?')->execute([$err ? 0 : 1, $err, $mid]);
+    db()->prepare('UPDATE kf_mails SET sent=?, error=? WHERE id=?')->execute([$err ? 0 : 1, $err, $mid]);
     return ['sent' => !$err, 'error' => $err];
 }
 function mailFrom(): string {
@@ -547,7 +547,7 @@ function raffleInput(array $b): ?array {
     return [$email, $phoneC, $name];
 }
 function raffleList(?string $month = null): array {
-    $sql = 'SELECT r.*, e.title, e.status FROM bs_raffle r LEFT JOIN bs_entries e ON e.id = r.entry_id';
+    $sql = 'SELECT r.*, e.title, e.status FROM kf_raffle r LEFT JOIN kf_entries e ON e.id = r.entry_id';
     $p = [];
     if ($month) { $sql .= ' WHERE r.month = ?'; $p[] = $month; }
     $st = db()->prepare($sql . ' ORDER BY r.id DESC');
@@ -590,11 +590,30 @@ switch ($action) {
         if ($mail !== '' && !filter_var($mail, FILTER_VALIDATE_EMAIL)) $mail = '';
         $id = insertEntry($type, $d, 'pending', $author, $mail);
         if ($raffle) {
-            db()->prepare('INSERT INTO bs_raffle (entry_id, name, email, phone, month, created) VALUES (?,?,?,?,?,?)')
+            db()->prepare('INSERT INTO kf_raffle (entry_id, name, email, phone, month, created) VALUES (?,?,?,?,?,?)')
                 ->execute([$id, $raffle[2], $raffle[0], $raffle[1], date('Y-m'), now()]);
         }
         notify($type, $id, $d, $author, $mail, (bool)$raffle);
         out(['ok' => true, 'id' => $id]);
+    }
+
+    case 'change_request': {
+        if (!$isPost) fail('POST erwartet.', 405);
+        $b = body();
+        checkCaptcha($b);
+        if (empty($b['privacy'])) fail('Bitte die Datenschutzerklärung bestätigen.');
+        $e = getEntry((string)($b['id'] ?? ''));
+        if (!$e || $e['type'] !== 'gasthaus') fail('Eintrag nicht gefunden.', 404);
+        $art = str($b['art'] ?? '', 60); $text = str($b['text'] ?? '', 2000);
+        $person = str($b['person'] ?? '', 100); $mail = str($b['email'] ?? '', 150);
+        if (mb_strlen($text) < 5 || $person === '' || $mail === '') fail('Bitte Beschreibung, Name und E-Mail angeben.');
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) fail('Die E-Mail-Adresse ist ungültig.');
+        $site = rtrim((string)($CFG['site_url'] ?: ''), '/');
+        $body = "Hallo,\n\nfür die Gaststätte „{$e['title']}“ ({$e['plz']} {$e['ort']}) wurde eine Änderung beantragt:\n\n" .
+            "Art: $art\n\n$text\n\nAntragsteller: $person\nE-Mail: $mail\nInhaber/Mitarbeiter: " . (!empty($b['inhaber']) ? 'ja' : 'nein') .
+            "\n\nEintrag im Adminbereich bearbeiten:\n$site/#admin\n\n– Kohlfahrten.de";
+        sendMail("[Kohlfahrten.de] Änderungsantrag: {$e['title']}", $body, 'gasthaus', $e['id']);
+        out(['ok' => true]);
     }
 
     case 'banner_request': {
@@ -620,7 +639,7 @@ switch ($action) {
         $e = getEntry((string)($b['id'] ?? ''));
         if (!$e || $e['type'] !== 'route' || $e['status'] !== 'approved') fail('Strecke nicht gefunden.', 404);
         try {
-            db()->prepare('INSERT INTO bs_ratings (entry_id, stars, voter, created) VALUES (?,?,?,?)')->execute([$e['id'], $stars, ipHash(), now()]);
+            db()->prepare('INSERT INTO kf_ratings (entry_id, stars, voter, created) VALUES (?,?,?,?)')->execute([$e['id'], $stars, ipHash(), now()]);
         } catch (PDOException $ex) {
             if ($ex->getCode() === '23000') fail('Du hast diese Strecke bereits bewertet.', 409);
             throw $ex;
@@ -663,9 +682,9 @@ switch ($action) {
             $oldData = json_decode($old['data'], true) ?: [];
             if ($type === 'route') $d['photos'] = savePhotos($item['photos'] ?? [], $oldData['photos'] ?? []);
             if ($type === 'gasthaus') $d['bannerImg'] = savePhotos($d['bannerImg'] !== '' ? [$d['bannerImg']] : [], !empty($oldData['bannerImg']) ? [$oldData['bannerImg']] : [])[0] ?? '';
-            db()->prepare('UPDATE bs_entries SET status=?, title=?, plz=?, ort=?, data=?, updated=? WHERE id=?')
+            db()->prepare('UPDATE kf_entries SET status=?, title=?, plz=?, ort=?, data=?, updated=? WHERE id=?')
                 ->execute([$status, $d['title'] ?? $d['name'], $d['plz'], $d['ort'], json_encode($d, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), now(), $id]);
-            if (!empty($b['clearRatings'])) db()->prepare('DELETE FROM bs_ratings WHERE entry_id=?')->execute([$id]);
+            if (!empty($b['clearRatings'])) db()->prepare('DELETE FROM kf_ratings WHERE entry_id=?')->execute([$id]);
         } else {
             if ($type === 'route') $d['photos'] = savePhotos($item['photos'] ?? []);
             if ($type === 'gasthaus') $d['bannerImg'] = savePhotos($d['bannerImg'] !== '' ? [$d['bannerImg']] : [])[0] ?? '';
@@ -679,7 +698,7 @@ switch ($action) {
         $b = body();
         $s = $b['status'] ?? '';
         if (!in_array($s, ['pending', 'approved', 'rejected'], true)) fail('Ungültiger Status.');
-        db()->prepare('UPDATE bs_entries SET status=?, updated=? WHERE id=?')->execute([$s, now(), (string)($b['id'] ?? '')]);
+        db()->prepare('UPDATE kf_entries SET status=?, updated=? WHERE id=?')->execute([$s, now(), (string)($b['id'] ?? '')]);
         out(['ok' => true]);
     }
 
@@ -689,9 +708,9 @@ switch ($action) {
         $e = getEntry($id);
         if ($e) {
             foreach ((json_decode($e['data'], true)['photos'] ?? []) as $p) if (is_string($p)) deletePhoto($p);
-            db()->prepare('DELETE FROM bs_entries WHERE id=?')->execute([$id]);
-            db()->prepare('DELETE FROM bs_ratings WHERE entry_id=?')->execute([$id]);
-            db()->prepare('DELETE FROM bs_raffle WHERE entry_id=?')->execute([$id]);
+            db()->prepare('DELETE FROM kf_entries WHERE id=?')->execute([$id]);
+            db()->prepare('DELETE FROM kf_ratings WHERE entry_id=?')->execute([$id]);
+            db()->prepare('DELETE FROM kf_raffle WHERE entry_id=?')->execute([$id]);
         }
         out(['ok' => true]);
     }
@@ -708,7 +727,7 @@ switch ($action) {
 
     case 'admin_seed': {
         requireAdmin();
-        if (empty(body()['append']) && (int)db()->query('SELECT COUNT(*) FROM bs_entries')->fetchColumn() > 0) fail('Es sind bereits Einträge vorhanden – Startdaten werden nur in eine leere Datenbank geladen.');
+        if (empty(body()['append']) && (int)db()->query('SELECT COUNT(*) FROM kf_entries')->fetchColumn() > 0) fail('Es sind bereits Einträge vorhanden – Startdaten werden nur in eine leere Datenbank geladen.');
         $data = (array)(body()['data'] ?? []);
         $n = 0;
         foreach (['routes' => 'route', 'gasthaeuser' => 'gasthaus', 'verleih' => 'verleih'] as $k => $type) {
@@ -719,7 +738,7 @@ switch ($action) {
                 $st = in_array($it['status'] ?? '', ['pending', 'approved', 'rejected'], true) ? $it['status'] : 'approved';
                 $id = insertEntry($type, $d, $st, (string)($it['author'] ?? 'Redaktion'), '', isset($it['created']) ? (int)$it['created'] : null);
                 foreach ((array)($it['ratings'] ?? []) as $i => $s) {
-                    db()->prepare('INSERT INTO bs_ratings (entry_id, stars, voter, created) VALUES (?,?,?,?)')->execute([$id, max(1, min(5, (int)$s)), hash('sha256', "seed-$id-$i"), now()]);
+                    db()->prepare('INSERT INTO kf_ratings (entry_id, stars, voter, created) VALUES (?,?,?,?)')->execute([$id, max(1, min(5, (int)$s)), hash('sha256', "seed-$id-$i"), now()]);
                 }
                 $n++;
             }
@@ -734,7 +753,7 @@ switch ($action) {
 
     case 'admin_status_info': {
         requireAdmin();
-        $schema = db()->query("SELECT v FROM bs_meta WHERE k='schema'")->fetchColumn();
+        $schema = db()->query("SELECT v FROM kf_meta WHERE k='schema'")->fetchColumn();
         $dir = __DIR__ . '/uploads';
         out([
             'version' => APP_VERSION, 'schema' => (int)$schema, 'php' => PHP_VERSION,
@@ -750,8 +769,8 @@ switch ($action) {
         requireAdmin();
         $month = (string)($_GET['month'] ?? '');
         if ($month !== '' && !preg_match('/^\d{4}-\d{2}$/', $month)) fail('Ungültiger Monat.');
-        $draws = db()->query('SELECT d.*, r.name, r.email, r.phone, r.entry_id, e.title FROM bs_raffle_draws d LEFT JOIN bs_raffle r ON r.id = d.raffle_id LEFT JOIN bs_entries e ON e.id = r.entry_id ORDER BY d.id DESC')->fetchAll();
-        $months = db()->query("SELECT month, COUNT(*) n FROM bs_raffle GROUP BY month ORDER BY month DESC")->fetchAll();
+        $draws = db()->query('SELECT d.*, r.name, r.email, r.phone, r.entry_id, e.title FROM kf_raffle_draws d LEFT JOIN kf_raffle r ON r.id = d.raffle_id LEFT JOIN kf_entries e ON e.id = r.entry_id ORDER BY d.id DESC')->fetchAll();
+        $months = db()->query("SELECT month, COUNT(*) n FROM kf_raffle GROUP BY month ORDER BY month DESC")->fetchAll();
         out([
             'entries' => raffleList($month ?: null),
             'months' => array_map(fn($m) => ['month' => $m['month'], 'count' => (int)$m['n']], $months),
@@ -767,7 +786,7 @@ switch ($action) {
         $month = (string)($b['month'] ?? '');
         if (!preg_match('/^\d{4}-\d{2}$/', $month)) fail('Bitte einen Monat wählen.');
         $onlyApproved = !isset($b['onlyApproved']) || !empty($b['onlyApproved']);
-        $sql = "SELECT r.* FROM bs_raffle r JOIN bs_entries e ON e.id = r.entry_id WHERE r.month = ?" . ($onlyApproved ? " AND e.status = 'approved'" : " AND e.status <> 'rejected'");
+        $sql = "SELECT r.* FROM kf_raffle r JOIN kf_entries e ON e.id = r.entry_id WHERE r.month = ?" . ($onlyApproved ? " AND e.status = 'approved'" : " AND e.status <> 'rejected'");
         $st = db()->prepare($sql . ' ORDER BY r.id');
         $st->execute([$month]);
         // Jede Person (gleiche E-Mail bzw. Handynummer) nur einmal pro Monat im Lostopf
@@ -778,14 +797,14 @@ switch ($action) {
             $seen[$key] = true; $pool[] = $r;
         }
         // bereits gezogene Gewinner dieses Monats ausschließen (bei Neuauslosung)
-        $prev = db()->prepare('SELECT raffle_id FROM bs_raffle_draws WHERE month = ?');
+        $prev = db()->prepare('SELECT raffle_id FROM kf_raffle_draws WHERE month = ?');
         $prev->execute([$month]);
         $prevIds = array_map('intval', $prev->fetchAll(PDO::FETCH_COLUMN));
         $pool = array_values(array_filter($pool, fn($r) => !in_array((int)$r['id'], $prevIds, true)));
         if (!$pool) fail('Für diesen Monat gibt es keine (weiteren) gültigen Teilnahmen.');
         $win = $pool[random_int(0, count($pool) - 1)];
         $note = str($b['note'] ?? '', 250);
-        db()->prepare('INSERT INTO bs_raffle_draws (month, raffle_id, pool, note, created) VALUES (?,?,?,?,?)')
+        db()->prepare('INSERT INTO kf_raffle_draws (month, raffle_id, pool, note, created) VALUES (?,?,?,?,?)')
             ->execute([$month, $win['id'], count($pool), $note, now()]);
         out(['ok' => true, 'winner' => ['name' => $win['name'], 'email' => $win['email'], 'phone' => $win['phone'], 'entryId' => $win['entry_id']], 'pool' => count($pool)]);
     }
@@ -795,9 +814,9 @@ switch ($action) {
         $b = body();
         if (($b['confirm'] ?? '') !== 'LÖSCHEN') fail('Bitte zur Bestätigung LÖSCHEN eingeben.');
         if (!empty($b['id'])) {
-            db()->prepare('DELETE FROM bs_raffle WHERE id = ?')->execute([(int)$b['id']]);
+            db()->prepare('DELETE FROM kf_raffle WHERE id = ?')->execute([(int)$b['id']]);
         } else {
-            db()->exec('DELETE FROM bs_raffle'); db()->exec('DELETE FROM bs_raffle_draws');
+            db()->exec('DELETE FROM kf_raffle'); db()->exec('DELETE FROM kf_raffle_draws');
         }
         out(['ok' => true]);
     }

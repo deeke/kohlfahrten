@@ -526,3 +526,9 @@ footer svg path{fill:#1d5c12}
 .premium.has-banner{padding:0}
 .premium.has-banner img{position:static;width:100%;height:100%;object-fit:cover}
 .premium.has-banner .pbadge{background:rgba(255,255,255,.85);color:#333;font-weight:700}
+
+.ecard{position:relative}
+.chg-btn{position:absolute;top:10px;right:10px;z-index:3;border:0;border-radius:999px;background:rgba(255,255,255,.95);color:#17700a;font:inherit;font-weight:800;font-size:.78rem;padding:6px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.18);display:inline-flex;gap:6px;align-items:center}
+.chg-btn:hover{background:#17700a;color:#fff}
+.ecard:not(:has(.ghfoto)) h3{padding-right:170px}
+@media(max-width:600px){.chg-btn{font-size:0;padding:8px}.chg-btn i{font-size:.9rem}.ecard:not(:has(.ghfoto)) h3{padding-right:40px}}

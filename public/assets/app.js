@@ -606,6 +606,36 @@ function renderShop(){
   $('#shopHost').innerHTML=SHOP_CATS.map(c=>`<a class="shop-cat ${c.foto?'has-foto':''}" href="${esc(c.url)}" target="_blank" rel="noopener">${c.foto?`<img class="scfoto" src="${esc(c.foto)}" alt="" loading="lazy">`:`<i class="fa-solid ${c.i} ic"></i>`}<div><b>${esc(c.t)}</b><span>${esc(c.d)}</span></div></a>`).join('');
 }
 
+/* ---------- Änderung beantragen ---------- */
+function openChangeRequest(id){
+  const g=find('gasthaus',id);if(!g)return;
+  const m=openModal(`<h3><i class="fa-solid fa-pen-to-square" style="color:var(--kf)"></i> Änderung beantragen</h3>
+    <p class="muted" style="margin-top:0">Für: <b>${esc(g.name)}</b>, ${esc(g.plz)} ${esc(g.ort)}. Die Redaktion prüft die Angaben und aktualisiert den Eintrag.</p>
+    <form novalidate>
+      <label class="fl"><i class="fa-solid fa-list"></i> Was soll geändert werden? <span class="req">*</span></label>
+      <select name="art"><option>Angebot / Beschreibung</option><option>Adresse / Kontakt / Webseite</option><option>Foto</option><option>Gaststätte geschlossen / Eintrag löschen</option><option>Sonstiges</option></select>
+      <label class="fl"><i class="fa-solid fa-align-left"></i> Beschreibung der Änderung <span class="req">*</span></label>
+      <textarea name="text" maxlength="2000" placeholder="z. B. neue Telefonnummer, aktuelle Termine, neuer Link …"></textarea>
+      <div class="row3" style="grid-template-columns:1fr 1fr">
+        <div><label class="fl"><i class="fa-solid fa-user"></i> Ihr Name <span class="req">*</span></label><input type="text" name="person" maxlength="100"></div>
+        <div><label class="fl"><i class="fa-solid fa-envelope"></i> E-Mail für Rückfragen <span class="req">*</span></label><input type="email" name="email" maxlength="150"></div>
+      </div>
+      <label class="check"><input type="checkbox" name="inhaber"> <span>Ich bin Inhaber/in oder arbeite für diese Gaststätte.</span></label>
+      ${captchaHTML()}
+      <label class="check"><input type="checkbox" name="privacy"> <span>Ich habe die <a href="#datenschutz">Datenschutzerklärung</a> gelesen.</span></label>
+      <div class="err hidden"></div>
+      <div class="btnrow" style="margin-top:12px"><button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i> Antrag senden</button></div>
+    </form>`);
+  const form=$('form',m.el);loadCaptcha(form);
+  form.onsubmit=async e=>{e.preventDefault();const err=$('.err',form),fail=t=>{err.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> '+t;err.classList.remove('hidden');};err.classList.add('hidden');
+    const d={id,art:form.art.value,text:form.text.value.trim(),person:form.person.value.trim(),email:form.email.value.trim(),inhaber:form.inhaber.checked};
+    if(d.text.length<5||!d.person||!d.email)return fail('Bitte Beschreibung, Name und E-Mail angeben.');
+    if(!form.privacy.checked)return fail('Bitte die Datenschutzerklärung bestätigen.');
+    try{await withBusy($('button[type=submit]',form),()=>api('change_request',{...d,privacy:true,...captchaData(form)}));}
+    catch(ex){if(ex.data?.newCaptcha)loadCaptcha(form);return fail(esc(ex.message));}
+    m.close();toast('Danke! Ihr Änderungsantrag wurde an die Redaktion gesendet.','mail',6000);};
+}
+
 /* ---------- Banner buchen ---------- */
 function renderBanner(){
   const host=$('#bannerFormHost');if(host.dataset.init)return;host.dataset.init=1;
@@ -758,7 +788,7 @@ function renderEintragen(){
 const ghFilter=new Set();
 function ghCard(g){
   const nR=nearby('route',[g.lat,g.lng]);const prem=isPremium(g);
-  return `<div class="card ecard ${prem?'premium-on':''}" data-id="${g.id}">${g.bannerImg||g.foto?`<img class="ghfoto" src="${esc(g.bannerImg||g.foto)}" alt="${esc(g.name)}" loading="lazy">`:''}
+  return `<div class="card ecard ${prem?'premium-on':''}" data-id="${g.id}"><button type="button" class="chg-btn" data-chg="${g.id}" title="Änderung für diesen Eintrag beantragen"><i class="fa-solid fa-pen-to-square"></i> Änderung beantragen</button>${g.bannerImg||g.foto?`<img class="ghfoto" src="${esc(g.bannerImg||g.foto)}" alt="${esc(g.name)}" loading="lazy">`:''}
     ${prem?'<span class="pill" style="background:#ffd84d;color:#3a2600;margin-bottom:6px"><i class="fa-solid fa-star"></i> Tipp der Redaktion</span>':''}
     <h3><i class="fa-solid ${g.bossel?'fa-bowling-ball':'fa-utensils'}" style="color:${g.bossel?'#e65100':g.kohlfahrt?'var(--grass-d)':'var(--brown)'}"></i>${esc(g.name)}</h3>
     <div class="addr"><i class="fa-solid fa-location-dot"></i> ${g.adresse?esc(g.adresse)+', ':''}${esc(g.plz)} ${esc(g.ort)}${g.region?` · <span class="ftag region-tag" style="padding:1px 8px;font-size:.78rem">${esc(g.region)}</span>`:''}${g.saal?` · <i class="fa-solid fa-users"></i> Saal bis ${esc(g.saal)} Pers.`:''}</div>
@@ -785,6 +815,7 @@ function renderGast(){
   $('#ghList').innerHTML=(gs.length?`<div class="muted" style="font-weight:700"><i class="fa-solid fa-list"></i> ${gs.length} Gaststätte${gs.length===1?'':'n'}</div>`+gs.map(ghCard).join(''):'<div class="card empty"><i class="fa-solid fa-utensils"></i>Keine Gaststätte gefunden.</div>')
     +'<div class="ads compact" data-ads="2"></div>';
   renderAds();
+  $$('#ghList [data-chg]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();openChangeRequest(b.dataset.chg);});
   entityMap(maps.gh,maps.ghLayer,gs,g=>pinIcon(g.bossel?'fa-bowling-ball':g.kohlfahrt?'fa-leaf':'fa-utensils',g.bossel?'#e65100':g.kohlfahrt?'#2e7d32':'#8d6e63'),g=>`<b>${esc(g.name)}</b><br>${esc(g.plz)} ${esc(g.ort)}`,'#ghList');
 }
 function entityMap(map,layer,items,icon,pop,listSel){
