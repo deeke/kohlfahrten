@@ -24,7 +24,7 @@ jobs:
             for url in $(grep -oE 'https://sites\.google\.com/sitesv-images-rt/[A-Za-z0-9_-]+' /tmp/page.html | sort -u); do
               n=$((n+1)); name="${short}-$(printf %02d $n)"
               curl -sSL --fail -A "$UA" -b /tmp/cj -e "https://sites.google.com/view/kohlfahrten-de/$page" -o "/tmp/$name" "${url}=w1600" || { echo "::warning::$name fehlgeschlagen"; continue; }
-              convert "/tmp/$name" -auto-orient -resize '1600x1600>' -quality 85 "bilder/orig/$name.jpg" || echo "::warning::$name nicht konvertierbar"
+              cp "/tmp/$name" "bilder/orig/$name.bin"
             done
             echo "$page: $n Bilder"
           done
