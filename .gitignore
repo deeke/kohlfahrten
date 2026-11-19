@@ -1,0 +1,5 @@
+# Zugangsdaten und Nutzer-Uploads nie ins Repository
+public/config.php
+public/uploads/*
+!public/uploads/.htaccess
+.DS_Store

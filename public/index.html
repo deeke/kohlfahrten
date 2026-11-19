@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kohlfahrten.de – Strecken, Gaststätten, Bollerwagen &amp; Spiele für eure Kohlfahrt</title>
+<meta name="description" content="Kohlfahrten.de: Kohlfahrt-Strecken, Gaststätten mit Grünkohl- und Boßelangeboten, Bollerwagenverleih, Kohlfahrten-Spiele, Tipps und Zubehör von bossel.de.">
+<meta name="theme-color" content="#1e8c0b">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css?v=1.0.0">
+<link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css?v=1.0.0">
+<link rel="stylesheet" href="assets/vendor/fonts/fonts.css?v=1.0.0">
+<link rel="stylesheet" href="assets/app.css?v=1.0.0">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <a href="#start" class="brand" aria-label="Kohlfahrten.de – Startseite"><img src="assets/img/logo.png" alt="Kohlfahrten.de" width="900" height="258"></a>
+    <button class="burger" id="burger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
+    <nav id="mainnav">
+      <a href="#start" data-v="start"><i class="fa-solid fa-house"></i> Start</a>
+      <a href="#strecken" data-v="strecken"><i class="fa-solid fa-route"></i> Strecken</a>
+      <a href="#gaststaetten" data-v="gaststaetten"><i class="fa-solid fa-utensils"></i> Gaststätten</a>
+      <a href="#bollerwagen" data-v="bollerwagen"><i class="fa-solid fa-trailer"></i> Bollerwagen</a>
+      <a href="#spiele" data-v="spiele"><i class="fa-solid fa-dice"></i> Spiele</a>
+      <a href="#infos" data-v="infos"><i class="fa-solid fa-circle-info"></i> Infos</a>
+      <a href="#shop" data-v="shop" class="shop"><i class="fa-solid fa-store"></i> Shop</a>
+    </nav>
+  </div>
+  <svg class="grass-edge" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1200V4C1100 14 1000 2 900 9S700 2 600 9 400 2 300 9 100 2 0 8Z" fill="#a9dcf5"/></svg>
+</header>
+
+<main>
+  <!-- START -->
+  <section class="view" id="v-start">
+    <div class="hero">
+      <div class="sun"></div>
+      <div class="cloud" style="top:60px;width:130px;height:34px;animation-duration:70s;animation-delay:-20s"></div>
+      <div class="cloud" style="top:130px;width:90px;height:24px;animation-duration:95s;animation-delay:-60s"></div>
+      <div class="cloud" style="top:30px;width:70px;height:20px;animation-duration:110s;animation-delay:-5s"></div>
+      <div class="wrap" style="position:relative;z-index:2">
+        <h1>Kohlfahrt planen. <span>Grünkohl genießen.</span></h1>
+        <p class="lead">Strecken, Gaststätten, Bollerwagen und die besten Kohlfahrten-Spiele – alles für eure Kohltour an einem Ort.</p>
+        <div class="btnrow">
+          <a class="btn lg" href="#strecken"><i class="fa-solid fa-map-location-dot"></i> Strecken finden</a>
+          <a class="btn lg ghost" href="#gaststaetten"><i class="fa-solid fa-utensils"></i> Gaststätten</a>
+          <a class="btn lg amber" href="downloads/kohlfahrten-guide.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> Guide (PDF)</a>
+        </div>
+      </div>
+      <svg class="hero-scene detail" viewBox="0 0 1400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<defs><filter id="glw" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<path class="bird" d="M720 52 q5 -6 10 0 q5 -6 10 0" stroke="#1d3a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path class="bird" d="M752 40 q4.0 -4.800000000000001 8.0 0 q4.0 -4.800000000000001 8.0 0" stroke="#1d3a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path class="bird" d="M785 60 q4.5 -5.4 9.0 0 q4.5 -5.4 9.0 0" stroke="#1d3a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path class="bird" d="M1180 44 q4.0 -4.800000000000001 8.0 0 q4.0 -4.800000000000001 8.0 0" stroke="#1d3a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path class="bird" d="M1205 32 q3.5 -4.199999999999999 7.0 0 q3.5 -4.199999999999999 7.0 0" stroke="#1d3a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<path d="M0 168 Q180 128 380 156 T760 146 T1100 140 T1400 150 V300 H0Z" fill="#a8dba0"/>
+<path d="M1010 176 Q1040 150 1090 148 H1400 V300 H1010Z" fill="#8fd18a"/>
+<path d="M1060 150 H1400" stroke="#6fbf6a" stroke-width="3"/>
+<g><g class="beam" style="transform-origin:1372px 48px"><path d="M1372 48 L1442 30 L1442 66 Z" fill="#fff6c4" opacity=".55"/><path d="M1372 48 L1302 30 L1302 66 Z" fill="#fff6c4" opacity=".55"/></g><path d="M1358 148 L1363 60 L1381 60 L1386 148 Z" fill="#fff"/><path d="M1358.6 137 L1359.2 126 L1384.8 126 L1385.4 137 Z" fill="#e53935"/><path d="M1359.9 115 L1360.5 104 L1383.5 104 L1384.1 115 Z" fill="#e53935"/><path d="M1361.1 93 L1361.8 82 L1382.2 82 L1382.9 93 Z" fill="#e53935"/><path d="M1362.4 71 L1363 60 L1381 60 L1381.6 71 Z" fill="#e53935"/><rect x="1359" y="56" width="26" height="5" fill="#37474f"/><rect x="1365" y="42" width="14" height="14" fill="#ffe08a" stroke="#37474f" stroke-width="2"/><path d="M1363 42 L1372 32 L1381 42 Z" fill="#c62828"/></g>
+<g transform="translate(1110 150) scale(1 1)"><path d="M-8 0 v7 M6 0 v7" stroke="#1d3a2a" stroke-width="2.4"/><g fill="#fff"><circle cx="-6" cy="-4" r="6"/><circle cx="2" cy="-6" r="7"/><circle cx="8" cy="-2" r="5.5"/><circle cx="-1" cy="0" r="6"/></g><ellipse cx="14" cy="-6" rx="4.5" ry="3.6" fill="#1d3a2a"/><ellipse cx="12" cy="-9" rx="2" ry="1.2" fill="#1d3a2a"/></g>
+<g transform="translate(1150 147) scale(-1 1)"><path d="M-8 0 v7 M6 0 v7" stroke="#1d3a2a" stroke-width="2.4"/><g fill="#fff"><circle cx="-6" cy="-4" r="6"/><circle cx="2" cy="-6" r="7"/><circle cx="8" cy="-2" r="5.5"/><circle cx="-1" cy="0" r="6"/></g><ellipse cx="14" cy="-6" rx="4.5" ry="3.6" fill="#1d3a2a"/><ellipse cx="12" cy="-9" rx="2" ry="1.2" fill="#1d3a2a"/></g>
+<g transform="translate(1195 149) scale(1 1)"><path d="M-8 0 v7 M6 0 v7" stroke="#1d3a2a" stroke-width="2.4"/><g fill="#fff"><circle cx="-6" cy="-4" r="6"/><circle cx="2" cy="-6" r="7"/><circle cx="8" cy="-2" r="5.5"/><circle cx="-1" cy="0" r="6"/></g><ellipse cx="14" cy="-6" rx="4.5" ry="3.6" fill="#1d3a2a"/><ellipse cx="12" cy="-9" rx="2" ry="1.2" fill="#1d3a2a"/></g>
+<g transform="translate(1255 148) scale(1 1)"><path d="M-8 0 v7 M6 0 v7" stroke="#1d3a2a" stroke-width="2.4"/><g fill="#fff"><circle cx="-6" cy="-4" r="6"/><circle cx="2" cy="-6" r="7"/><circle cx="8" cy="-2" r="5.5"/><circle cx="-1" cy="0" r="6"/></g><ellipse cx="14" cy="-6" rx="4.5" ry="3.6" fill="#1d3a2a"/><ellipse cx="12" cy="-9" rx="2" ry="1.2" fill="#1d3a2a"/></g>
+<g transform="translate(1285 150) scale(-1 1)"><path d="M-8 0 v7 M6 0 v7" stroke="#1d3a2a" stroke-width="2.4"/><g fill="#fff"><circle cx="-6" cy="-4" r="6"/><circle cx="2" cy="-6" r="7"/><circle cx="8" cy="-2" r="5.5"/><circle cx="-1" cy="0" r="6"/></g><ellipse cx="14" cy="-6" rx="4.5" ry="3.6" fill="#1d3a2a"/><ellipse cx="12" cy="-9" rx="2" ry="1.2" fill="#1d3a2a"/></g>
+<path d="M0 186 Q240 168 520 186 T1000 182 T1400 186 V300 H0Z" fill="#7ccb72"/>
+<path d="M8 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="3.2" cy="188" r="4.8" fill="#388e3c"/><circle cx="12.8" cy="188" r="4.8" fill="#2e7d32"/><circle cx="8" cy="183.2" r="5.6" fill="#388e3c"/><circle cx="5.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="11.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="6.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M33 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="28.2" cy="188" r="4.8" fill="#2e7d32"/><circle cx="37.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="33" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="30.6" cy="179.2" r="4" fill="#388e3c"/><circle cx="36.2" cy="178.4" r="4" fill="#1b5e20"/><circle cx="31.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M58 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="53.2" cy="188" r="4.8" fill="#2e7d32"/><circle cx="62.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="58" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="55.6" cy="179.2" r="4" fill="#2e7d32"/><circle cx="61.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="56.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M83 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="78.2" cy="188" r="4.8" fill="#388e3c"/><circle cx="87.8" cy="188" r="4.8" fill="#388e3c"/><circle cx="83" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="80.6" cy="179.2" r="4" fill="#2e7d32"/><circle cx="86.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="81.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M108 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="103.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="112.8" cy="188" r="4.8" fill="#388e3c"/><circle cx="108" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="105.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="111.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="106.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M133 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="128.2" cy="188" r="4.8" fill="#2e7d32"/><circle cx="137.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="133" cy="183.2" r="5.6" fill="#1b5e20"/><circle cx="130.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="136.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="131.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M158 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="153.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="162.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="158" cy="183.2" r="5.6" fill="#388e3c"/><circle cx="155.6" cy="179.2" r="4" fill="#2e7d32"/><circle cx="161.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="156.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M183 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="178.2" cy="188" r="4.8" fill="#2e7d32"/><circle cx="187.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="183" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="180.6" cy="179.2" r="4" fill="#388e3c"/><circle cx="186.2" cy="178.4" r="4" fill="#388e3c"/><circle cx="181.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M208 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="203.2" cy="188" r="4.8" fill="#2e7d32"/><circle cx="212.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="208" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="205.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="211.2" cy="178.4" r="4" fill="#388e3c"/><circle cx="206.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M233 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="228.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="237.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="233" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="230.6" cy="179.2" r="4" fill="#2e7d32"/><circle cx="236.2" cy="178.4" r="4" fill="#1b5e20"/><circle cx="231.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M258 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="253.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="262.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="258" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="255.6" cy="179.2" r="4" fill="#388e3c"/><circle cx="261.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="256.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M283 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="278.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="287.8" cy="188" r="4.8" fill="#1b5e20"/><circle cx="283" cy="183.2" r="5.6" fill="#2e7d32"/><circle cx="280.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="286.2" cy="178.4" r="4" fill="#2e7d32"/><circle cx="281.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M308 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="303.2" cy="188" r="4.8" fill="#1b5e20"/><circle cx="312.8" cy="188" r="4.8" fill="#2e7d32"/><circle cx="308" cy="183.2" r="5.6" fill="#388e3c"/><circle cx="305.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="311.2" cy="178.4" r="4" fill="#1b5e20"/><circle cx="306.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M333 196 v-6.4" stroke="#7cb342" stroke-width="2"/><circle cx="328.2" cy="188" r="4.8" fill="#388e3c"/><circle cx="337.8" cy="188" r="4.8" fill="#388e3c"/><circle cx="333" cy="183.2" r="5.6" fill="#388e3c"/><circle cx="330.6" cy="179.2" r="4" fill="#1b5e20"/><circle cx="336.2" cy="178.4" r="4" fill="#388e3c"/><circle cx="331.4" cy="181.6" r="1.6" fill="#81c784" opacity=".7"/>
+<path d="M18 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="12.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="23.3" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="18" cy="190.9" r="6.2" fill="#2e7d32"/><circle cx="15.4" cy="186.5" r="4.4" fill="#2e7d32"/><circle cx="21.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="16.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M43 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="37.7" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="48.3" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="43" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="40.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="46.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="41.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M68 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="62.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="73.3" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="68" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="65.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="71.5" cy="185.6" r="4.4" fill="#388e3c"/><circle cx="66.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M93 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="87.7" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="98.3" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="93" cy="190.9" r="6.2" fill="#2e7d32"/><circle cx="90.4" cy="186.5" r="4.4" fill="#1b5e20"/><circle cx="96.5" cy="185.6" r="4.4" fill="#388e3c"/><circle cx="91.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M118 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="112.7" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="123.3" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="118" cy="190.9" r="6.2" fill="#2e7d32"/><circle cx="115.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="121.5" cy="185.6" r="4.4" fill="#388e3c"/><circle cx="116.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M143 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="137.7" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="148.3" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="143" cy="190.9" r="6.2" fill="#2e7d32"/><circle cx="140.4" cy="186.5" r="4.4" fill="#1b5e20"/><circle cx="146.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="141.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M168 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="162.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="173.3" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="168" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="165.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="171.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="166.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M193 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="187.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="198.3" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="193" cy="190.9" r="6.2" fill="#388e3c"/><circle cx="190.4" cy="186.5" r="4.4" fill="#2e7d32"/><circle cx="196.5" cy="185.6" r="4.4" fill="#2e7d32"/><circle cx="191.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M218 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="212.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="223.3" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="218" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="215.4" cy="186.5" r="4.4" fill="#1b5e20"/><circle cx="221.5" cy="185.6" r="4.4" fill="#2e7d32"/><circle cx="216.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M243 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="237.7" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="248.3" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="243" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="240.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="246.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="241.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M268 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="262.7" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="273.3" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="268" cy="190.9" r="6.2" fill="#388e3c"/><circle cx="265.4" cy="186.5" r="4.4" fill="#388e3c"/><circle cx="271.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="266.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M293 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="287.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="298.3" cy="196.2" r="5.3" fill="#1b5e20"/><circle cx="293" cy="190.9" r="6.2" fill="#388e3c"/><circle cx="290.4" cy="186.5" r="4.4" fill="#2e7d32"/><circle cx="296.5" cy="185.6" r="4.4" fill="#388e3c"/><circle cx="291.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M318 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="312.7" cy="196.2" r="5.3" fill="#388e3c"/><circle cx="323.3" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="318" cy="190.9" r="6.2" fill="#1b5e20"/><circle cx="315.4" cy="186.5" r="4.4" fill="#2e7d32"/><circle cx="321.5" cy="185.6" r="4.4" fill="#388e3c"/><circle cx="316.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M343 205 v-7" stroke="#7cb342" stroke-width="2.2"/><circle cx="337.7" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="348.3" cy="196.2" r="5.3" fill="#2e7d32"/><circle cx="343" cy="190.9" r="6.2" fill="#388e3c"/><circle cx="340.4" cy="186.5" r="4.4" fill="#2e7d32"/><circle cx="346.5" cy="185.6" r="4.4" fill="#1b5e20"/><circle cx="341.2" cy="189.2" r="1.8" fill="#81c784" opacity=".7"/>
+<path d="M28 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="22.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="33.8" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="28" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="25.1" cy="193.8" r="4.8" fill="#388e3c"/><circle cx="31.8" cy="192.9" r="4.8" fill="#2e7d32"/><circle cx="26.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M53 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="47.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="58.8" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="53" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="50.1" cy="193.8" r="4.8" fill="#1b5e20"/><circle cx="56.8" cy="192.9" r="4.8" fill="#388e3c"/><circle cx="51.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M78 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="72.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="83.8" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="78" cy="198.6" r="6.7" fill="#1b5e20"/><circle cx="75.1" cy="193.8" r="4.8" fill="#388e3c"/><circle cx="81.8" cy="192.9" r="4.8" fill="#1b5e20"/><circle cx="76.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M103 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="97.2" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="108.8" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="103" cy="198.6" r="6.7" fill="#1b5e20"/><circle cx="100.1" cy="193.8" r="4.8" fill="#388e3c"/><circle cx="106.8" cy="192.9" r="4.8" fill="#2e7d32"/><circle cx="101.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M128 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="122.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="133.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="128" cy="198.6" r="6.7" fill="#2e7d32"/><circle cx="125.1" cy="193.8" r="4.8" fill="#2e7d32"/><circle cx="131.8" cy="192.9" r="4.8" fill="#2e7d32"/><circle cx="126.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M153 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="147.2" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="158.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="153" cy="198.6" r="6.7" fill="#2e7d32"/><circle cx="150.1" cy="193.8" r="4.8" fill="#388e3c"/><circle cx="156.8" cy="192.9" r="4.8" fill="#1b5e20"/><circle cx="151.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M178 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="172.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="183.8" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="178" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="175.1" cy="193.8" r="4.8" fill="#2e7d32"/><circle cx="181.8" cy="192.9" r="4.8" fill="#2e7d32"/><circle cx="176.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M203 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="197.2" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="208.8" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="203" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="200.1" cy="193.8" r="4.8" fill="#1b5e20"/><circle cx="206.8" cy="192.9" r="4.8" fill="#1b5e20"/><circle cx="201.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M228 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="222.2" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="233.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="228" cy="198.6" r="6.7" fill="#1b5e20"/><circle cx="225.1" cy="193.8" r="4.8" fill="#1b5e20"/><circle cx="231.8" cy="192.9" r="4.8" fill="#1b5e20"/><circle cx="226.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M253 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="247.2" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="258.8" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="253" cy="198.6" r="6.7" fill="#1b5e20"/><circle cx="250.1" cy="193.8" r="4.8" fill="#2e7d32"/><circle cx="256.8" cy="192.9" r="4.8" fill="#388e3c"/><circle cx="251.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M278 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="272.2" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="283.8" cy="204.4" r="5.8" fill="#1b5e20"/><circle cx="278" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="275.1" cy="193.8" r="4.8" fill="#388e3c"/><circle cx="281.8" cy="192.9" r="4.8" fill="#388e3c"/><circle cx="276.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M303 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="297.2" cy="204.4" r="5.8" fill="#388e3c"/><circle cx="308.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="303" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="300.1" cy="193.8" r="4.8" fill="#1b5e20"/><circle cx="306.8" cy="192.9" r="4.8" fill="#388e3c"/><circle cx="301.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M328 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="322.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="333.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="328" cy="198.6" r="6.7" fill="#2e7d32"/><circle cx="325.1" cy="193.8" r="4.8" fill="#2e7d32"/><circle cx="331.8" cy="192.9" r="4.8" fill="#388e3c"/><circle cx="326.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M353 214 v-7.7" stroke="#7cb342" stroke-width="2.4"/><circle cx="347.2" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="358.8" cy="204.4" r="5.8" fill="#2e7d32"/><circle cx="353" cy="198.6" r="6.7" fill="#388e3c"/><circle cx="350.1" cy="193.8" r="4.8" fill="#1b5e20"/><circle cx="356.8" cy="192.9" r="4.8" fill="#2e7d32"/><circle cx="351.1" cy="196.7" r="1.9" fill="#81c784" opacity=".7"/>
+<path d="M38 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="31.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="44.2" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="38" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="34.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="42.2" cy="200.1" r="5.2" fill="#1b5e20"/><circle cx="35.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M63 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="56.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="69.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="63" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="59.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="67.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="60.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M88 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="81.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="94.2" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="88" cy="206.4" r="7.3" fill="#388e3c"/><circle cx="84.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="92.2" cy="200.1" r="5.2" fill="#1b5e20"/><circle cx="85.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M113 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="106.8" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="119.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="113" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="109.9" cy="201.2" r="5.2" fill="#388e3c"/><circle cx="117.2" cy="200.1" r="5.2" fill="#388e3c"/><circle cx="110.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M138 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="131.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="144.2" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="138" cy="206.4" r="7.3" fill="#388e3c"/><circle cx="134.9" cy="201.2" r="5.2" fill="#388e3c"/><circle cx="142.2" cy="200.1" r="5.2" fill="#388e3c"/><circle cx="135.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M163 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="156.8" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="169.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="163" cy="206.4" r="7.3" fill="#2e7d32"/><circle cx="159.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="167.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="160.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M188 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="181.8" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="194.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="188" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="184.9" cy="201.2" r="5.2" fill="#388e3c"/><circle cx="192.2" cy="200.1" r="5.2" fill="#388e3c"/><circle cx="185.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M213 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="206.8" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="219.2" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="213" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="209.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="217.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="210.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M238 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="231.8" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="244.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="238" cy="206.4" r="7.3" fill="#2e7d32"/><circle cx="234.9" cy="201.2" r="5.2" fill="#1b5e20"/><circle cx="242.2" cy="200.1" r="5.2" fill="#1b5e20"/><circle cx="235.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M263 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="256.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="269.2" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="263" cy="206.4" r="7.3" fill="#388e3c"/><circle cx="259.9" cy="201.2" r="5.2" fill="#1b5e20"/><circle cx="267.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="260.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M288 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="281.8" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="294.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="288" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="284.9" cy="201.2" r="5.2" fill="#388e3c"/><circle cx="292.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="285.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M313 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="306.8" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="319.2" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="313" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="309.9" cy="201.2" r="5.2" fill="#1b5e20"/><circle cx="317.2" cy="200.1" r="5.2" fill="#1b5e20"/><circle cx="310.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M338 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="331.8" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="344.2" cy="212.6" r="6.2" fill="#1b5e20"/><circle cx="338" cy="206.4" r="7.3" fill="#2e7d32"/><circle cx="334.9" cy="201.2" r="5.2" fill="#1b5e20"/><circle cx="342.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="335.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<path d="M363 223 v-8.3" stroke="#7cb342" stroke-width="2.6"/><circle cx="356.8" cy="212.6" r="6.2" fill="#2e7d32"/><circle cx="369.2" cy="212.6" r="6.2" fill="#388e3c"/><circle cx="363" cy="206.4" r="7.3" fill="#1b5e20"/><circle cx="359.9" cy="201.2" r="5.2" fill="#2e7d32"/><circle cx="367.2" cy="200.1" r="5.2" fill="#2e7d32"/><circle cx="360.9" cy="204.3" r="2.1" fill="#81c784" opacity=".7"/>
+<g><path d="M1262 186 L1272 96 L1304 96 L1314 186 Z" fill="#8d6e63"/><path d="M1258 152 h60" stroke="#5d4037" stroke-width="4"/><rect x="1282" y="164" width="12" height="22" rx="6" fill="#5d4037"/><rect x="1283" y="120" width="10" height="12" rx="5" fill="#ffe08a"/><path d="M1268 96 Q1288 68 1308 96 Z" fill="#6d4c41"/><g class="sails" style="transform-origin:1288px 86px"><g transform="rotate(0 1288 86)"><path d="M1288 86 V24" stroke="#5d4037" stroke-width="3"/><rect x="1290" y="26" width="12" height="48" fill="#fff" opacity=".9" stroke="#8d6e63" stroke-width="1.2"/><path d="M1290 38 h12 M1290 50 h12 M1290 62 h12 M1296 26 v48" stroke="#8d6e63" stroke-width="1"/></g><g transform="rotate(90 1288 86)"><path d="M1288 86 V24" stroke="#5d4037" stroke-width="3"/><rect x="1290" y="26" width="12" height="48" fill="#fff" opacity=".9" stroke="#8d6e63" stroke-width="1.2"/><path d="M1290 38 h12 M1290 50 h12 M1290 62 h12 M1296 26 v48" stroke="#8d6e63" stroke-width="1"/></g><g transform="rotate(180 1288 86)"><path d="M1288 86 V24" stroke="#5d4037" stroke-width="3"/><rect x="1290" y="26" width="12" height="48" fill="#fff" opacity=".9" stroke="#8d6e63" stroke-width="1.2"/><path d="M1290 38 h12 M1290 50 h12 M1290 62 h12 M1296 26 v48" stroke="#8d6e63" stroke-width="1"/></g><g transform="rotate(270 1288 86)"><path d="M1288 86 V24" stroke="#5d4037" stroke-width="3"/><rect x="1290" y="26" width="12" height="48" fill="#fff" opacity=".9" stroke="#8d6e63" stroke-width="1.2"/><path d="M1290 38 h12 M1290 50 h12 M1290 62 h12 M1296 26 v48" stroke="#8d6e63" stroke-width="1"/></g></g><circle cx="1288" cy="86" r="4" fill="#3e2723"/></g>
+<rect x="451" y="164" width="8" height="36" rx="3" fill="#6d4c41"/><circle cx="455" cy="152" r="16" fill="#2e7d32"/><circle cx="447" cy="146" r="11.2" fill="#3f8f3a"/><circle cx="464" cy="156" r="8.8" fill="#3f8f3a"/><circle cx="443" cy="140" r="3.52" fill="#81c784" opacity=".6"/>
+<rect x="1146" y="154" width="8" height="36" rx="3" fill="#6d4c41"/><circle cx="1150" cy="142" r="30" fill="#2e7d32"/><circle cx="1142" cy="136" r="21.0" fill="#4caf50"/><circle cx="1159" cy="146" r="16.5" fill="#4caf50"/><circle cx="1138" cy="130" r="6.6" fill="#81c784" opacity=".6"/>
+<path d="M260 300 Q480 214 700 216 T1010 212 L1055 212" stroke="#e8dfc8" stroke-width="26" fill="none" stroke-linecap="round"/>
+<path d="M260 300 Q480 214 700 216 T1010 212 L1055 212" stroke="#d6cbb0" stroke-width="2" stroke-dasharray="1 14" fill="none"/>
+<path d="M0 230 Q300 220 640 236 T1400 226 V300 H0Z" fill="#5cb85c"/>
+<circle cx="724" cy="243.8" r="2" fill="#fff"/><circle cx="1365.9" cy="253.4" r="2" fill="#fff"/><circle cx="372.5" cy="251.2" r="2" fill="#ff80ab"/><circle cx="628.2" cy="256.6" r="2" fill="#ff80ab"/><circle cx="1318.8" cy="244" r="2" fill="#ffd84d"/><circle cx="158.9" cy="246.3" r="2" fill="#ff80ab"/><circle cx="297.9" cy="249.7" r="2" fill="#fff"/><circle cx="672.1" cy="250.4" r="2" fill="#fff"/><circle cx="1155.1" cy="238.6" r="2" fill="#fff"/><circle cx="1083.9" cy="252.5" r="2" fill="#fff"/><circle cx="1229.1" cy="245.5" r="2" fill="#ff80ab"/><circle cx="138" cy="256.8" r="2" fill="#fff"/><circle cx="649.9" cy="252.4" r="2" fill="#fff"/><circle cx="1005.7" cy="239.7" r="2" fill="#ffd84d"/><circle cx="57.5" cy="249" r="2" fill="#fff"/><circle cx="1116.8" cy="239.2" r="2" fill="#fff"/><circle cx="913.9" cy="243.7" r="2" fill="#ffd84d"/><circle cx="49.1" cy="253.6" r="2" fill="#fff"/><circle cx="736.2" cy="256.5" r="2" fill="#fff"/><circle cx="1361.7" cy="240.3" r="2" fill="#ffd84d"/><circle cx="58.1" cy="240.7" r="2" fill="#ffd84d"/><circle cx="1058.6" cy="243.2" r="2" fill="#fff"/><circle cx="1154.5" cy="237.3" r="2" fill="#ff80ab"/><circle cx="1240.9" cy="250.6" r="2" fill="#fff"/><circle cx="1144.9" cy="255.3" r="2" fill="#ffd84d"/><circle cx="743.3" cy="247.5" r="2" fill="#fff"/><circle cx="1207" cy="253.1" r="2" fill="#fff"/><circle cx="1075.4" cy="239.3" r="2" fill="#ffd84d"/><circle cx="664" cy="252" r="2" fill="#fff"/><circle cx="463.3" cy="247.4" r="2" fill="#fff"/><circle cx="1086.6" cy="238.3" r="2" fill="#fff"/><circle cx="358" cy="242.1" r="2" fill="#fff"/><circle cx="710.5" cy="248.4" r="2" fill="#fff"/><circle cx="622.8" cy="249.5" r="2" fill="#ffd84d"/><circle cx="962.1" cy="246" r="2" fill="#fff"/><circle cx="710.5" cy="241.4" r="2" fill="#ff80ab"/><circle cx="1275" cy="255.6" r="2" fill="#ffd84d"/><circle cx="1162.4" cy="239" r="2" fill="#fff"/><circle cx="553.6" cy="243" r="2" fill="#ffd84d"/><circle cx="602.5" cy="240.7" r="2" fill="#ff80ab"/><circle cx="1086.2" cy="255.7" r="2" fill="#ffd84d"/><circle cx="1297.7" cy="250.2" r="2" fill="#ff80ab"/><circle cx="214.5" cy="255.4" r="2" fill="#fff"/><circle cx="318.6" cy="257" r="2" fill="#fff"/><circle cx="1223.5" cy="239.6" r="2" fill="#ffd84d"/><circle cx="239.6" cy="245.5" r="2" fill="#fff"/><circle cx="481.2" cy="240.3" r="2" fill="#ff80ab"/><circle cx="145.4" cy="244.1" r="2" fill="#ff80ab"/><circle cx="773.5" cy="245.7" r="2" fill="#fff"/><circle cx="542.7" cy="247.4" r="2" fill="#ff80ab"/><circle cx="716.7" cy="237.4" r="2" fill="#ffd84d"/><circle cx="1341.5" cy="238.3" r="2" fill="#ff80ab"/><circle cx="389.8" cy="255.9" r="2" fill="#ffd84d"/><circle cx="387.8" cy="238.9" r="2" fill="#fff"/><circle cx="1175.4" cy="250.9" r="2" fill="#ff80ab"/><circle cx="572.1" cy="247.8" r="2" fill="#fff"/><circle cx="972.6" cy="238" r="2" fill="#fff"/><circle cx="1107.4" cy="240" r="2" fill="#fff"/><circle cx="385.7" cy="236.4" r="2" fill="#fff"/><circle cx="1110.2" cy="237.8" r="2" fill="#ffd84d"/><circle cx="110.6" cy="255" r="2" fill="#fff"/><circle cx="35.7" cy="257.9" r="2" fill="#fff"/><circle cx="1280.3" cy="241.9" r="2" fill="#ffd84d"/><circle cx="78.8" cy="251.6" r="2" fill="#fff"/><circle cx="1338.1" cy="241.8" r="2" fill="#ffd84d"/><circle cx="294.4" cy="242.9" r="2" fill="#ff80ab"/><circle cx="742.3" cy="240.5" r="2" fill="#fff"/><circle cx="700.1" cy="239.9" r="2" fill="#ff80ab"/><circle cx="1113" cy="257.9" r="2" fill="#fff"/><circle cx="40.9" cy="252.1" r="2" fill="#ffd84d"/>
+<path d="M0 262 Q350 248 700 262 T1400 256 V300 H0Z" fill="#2e7d32"/>
+<g transform="translate(70 0)">
+<g><rect x="442.5" y="154" width="5" height="62" fill="#6d4c41"/><path d="M443 156 h56 l9 8 l-9 8 h-56 Z" fill="#fff" stroke="#2e7d32" stroke-width="2"/><text x="471" y="168" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="9.5" fill="#2e7d32">Kohltour</text><path d="M447 176 h-46 l-8 7 l8 7 h46 Z" fill="#ffd84d" stroke="#b28704" stroke-width="2"/><text x="424" y="186.5" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="8.5" fill="#5d4037">Start 0 km</text></g>
+<g class="gasthaus"><rect x="1022" y="24" width="18" height="50" fill="#8b3a2b"/><rect x="1019" y="20" width="24" height="7" fill="#6d2a1f"/><g class="smoke" fill="#fff"><circle cx="1031" cy="10" r="8"/><circle cx="1040" cy="-6" r="10"/><circle cx="1052" cy="-24" r="12"/></g><rect x="880" y="102" width="200" height="112" fill="#f6e7c8"/><rect x="880" y="188" width="200" height="26" fill="#c0715a"/><rect x="882" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="892" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="882" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="902" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="912" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="902" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="922" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="932" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="922" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="942" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="952" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="942" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="962" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="972" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="962" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="982" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="992" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="982" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1002" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1012" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1002" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1022" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1032" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1022" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1042" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1052" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1042" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1062" y="189.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1072" y="197.5" width="17" height="6.5" fill="#b4604a" opacity=".6"/><rect x="1062" y="206.0" width="17" height="6.5" fill="#b4604a" opacity=".6"/><path d="M864 108 L980.0 28 L1096 108 Z" fill="#b5452f"/><path d="M882.9 95 H1077.2" stroke="#8b3a2b" stroke-width="1.5" opacity=".7"/><path d="M901.7 82 H1058.3" stroke="#8b3a2b" stroke-width="1.5" opacity=".7"/><path d="M920.5 69 H1039.5" stroke="#8b3a2b" stroke-width="1.5" opacity=".7"/><path d="M939.4 56 H1020.6" stroke="#8b3a2b" stroke-width="1.5" opacity=".7"/><path d="M958.2 43 H1001.8" stroke="#8b3a2b" stroke-width="1.5" opacity=".7"/><path d="M864 108 L980.0 28 L1096 108" fill="none" stroke="#7a2e22" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><circle class="win" cx="980.0" cy="72" r="12" fill="#ffe08a" stroke="#7b5233" stroke-width="3.5"/><path d="M968.0 72 h24 M980.0 60 v24" stroke="#7b5233" stroke-width="2"/><g stroke="#7b5233" stroke-width="5" fill="none" stroke-linecap="square"><path d="M880 102 V188 M1080 102 V188 M880 102 H1080 M880 146 H1080 M880 188 H1080 M980.0 102 V146"/><path d="M880 146 L906 102 M954.0 102 L980.0 146 M980.0 146 L1006.0 102 M1054 102 L1080 146"/></g><rect class="win" x="914" y="110" width="28" height="26" rx="2" fill="#ffe08a" stroke="#7b5233" stroke-width="3"/><path d="M928 110 v26 M914 123 h28" stroke="#7b5233" stroke-width="1.8"/><rect x="911" y="136" width="34" height="6" rx="2" fill="#6d4c41"/><circle cx="915" cy="135" r="3" fill="#e53935"/><circle cx="921" cy="135" r="3" fill="#ff80ab"/><circle cx="927" cy="135" r="3" fill="#ffd84d"/><circle cx="933" cy="135" r="3" fill="#e53935"/><circle cx="939" cy="135" r="3" fill="#ff80ab"/><circle cx="945" cy="135" r="3" fill="#ffd84d"/><rect class="win" x="1018" y="110" width="28" height="26" rx="2" fill="#ffe08a" stroke="#7b5233" stroke-width="3"/><path d="M1032 110 v26 M1018 123 h28" stroke="#7b5233" stroke-width="1.8"/><rect x="1015" y="136" width="34" height="6" rx="2" fill="#6d4c41"/><circle cx="1019" cy="135" r="3" fill="#e53935"/><circle cx="1025" cy="135" r="3" fill="#ff80ab"/><circle cx="1031" cy="135" r="3" fill="#ffd84d"/><circle cx="1037" cy="135" r="3" fill="#e53935"/><circle cx="1043" cy="135" r="3" fill="#ff80ab"/><circle cx="1049" cy="135" r="3" fill="#ffd84d"/><rect class="win" x="898" y="156" width="32" height="28" rx="14" ry="3" fill="#ffe08a" stroke="#7b5233" stroke-width="3"/><path d="M914 156 v28" stroke="#7b5233" stroke-width="1.8"/><path d="M894 156 h40" stroke="#2e7d32" stroke-width="5"/><rect class="win" x="1030" y="156" width="32" height="28" rx="14" ry="3" fill="#ffe08a" stroke="#7b5233" stroke-width="3"/><path d="M1046 156 v28" stroke="#7b5233" stroke-width="1.8"/><path d="M1026 156 h40" stroke="#2e7d32" stroke-width="5"/><rect x="962.0" y="156" width="36" height="58" rx="18" ry="18" fill="#6d4c2f"/><rect x="967.0" y="164" width="26" height="50" rx="13" fill="#5d3f26"/><circle cx="990.0" cy="188" r="2.5" fill="#ffd84d"/><path d="M956.0 214 h48" stroke="#9e9e9e" stroke-width="4"/><path d="M950.0 154 v6" stroke="#37474f" stroke-width="2"/><rect class="lamp" x="945.0" y="160" width="10" height="13" rx="2" fill="#ffe08a" stroke="#37474f" stroke-width="2"/><path d="M1010.0 154 v6" stroke="#37474f" stroke-width="2"/><rect class="lamp" x="1005.0" y="160" width="10" height="13" rx="2" fill="#ffe08a" stroke="#37474f" stroke-width="2"/><path d="M1080 116 H1124" stroke="#4e342e" stroke-width="4" stroke-linecap="round"/><path d="M1120 116 q0 -10 -10 -10" stroke="#4e342e" stroke-width="2" fill="none"/><g class="sign" style="transform-origin:1102px 116px"><path d="M1088 116 v8 M1116 116 v8" stroke="#4e342e" stroke-width="2"/><rect x="1062" y="124" width="80" height="34" rx="6" fill="#2e7d32" stroke="#1b4d1e" stroke-width="2.5"/><text x="1102" y="140" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="13" fill="#fff">Gasthaus</text><text x="1102" y="153" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="700" font-size="9.5" fill="#ffd84d">Zum Grünkohl</text></g><path d="M1088 214 l8 -34 M1118 214 l-8 -34" stroke="#6d4c41" stroke-width="3"/><rect x="1089" y="170" width="28" height="32" rx="2" fill="#263238" stroke="#8d6e63" stroke-width="2.5"/><text x="1103" y="180" text-anchor="middle" font-family="sans-serif" font-size="5.5" fill="#fff" font-weight="700">HEUTE</text><text x="1103" y="188" text-anchor="middle" font-family="sans-serif" font-size="5" fill="#a5d6a7">Grünkohl</text><text x="1103" y="195" text-anchor="middle" font-family="sans-serif" font-size="5" fill="#ffe082">&amp; Pinkel</text></g>
+<g class="dog" style="transform-origin:505px 218px"><ellipse cx="505" cy="218" rx="14" ry="2.5" fill="#000" opacity=".12"/><path d="M495 208 l-3 10 M501 208 l1 10 M511 208 l-2 10 M516 208 l3 10" stroke="#8d5a2b" stroke-width="3" stroke-linecap="round"/><ellipse cx="505" cy="204" rx="14" ry="7" fill="#b9773d"/><path class="tail" d="M492 201 q-8 -6 -5 -14" stroke="#b9773d" stroke-width="3.5" fill="none" stroke-linecap="round" style="transform-origin:492px 201px"/><circle cx="520" cy="196" r="7" fill="#b9773d"/><ellipse cx="526" cy="198" rx="4" ry="3" fill="#b9773d"/><circle cx="529" cy="197" r="1.6" fill="#1d3a2a"/><path d="M516 191 q-5 4 -2 10" fill="#7a4a22"/><circle cx="521" cy="194" r="1.2" fill="#1d3a2a"/><rect x="514" y="200" width="8" height="2.5" rx="1" fill="#e53935"/></g>
+<g class="walker" style="animation-delay:-0.4s"><ellipse cx="548" cy="216" rx="18" ry="3.5" fill="#000" opacity=".13"/><path d="M543 186 L535 212" stroke="#263238" stroke-width="8" stroke-linecap="round"/><ellipse cx="537" cy="213.5" rx="6" ry="3.5" fill="#3e2723"/><path d="M553 186 L561 212" stroke="#263238" stroke-width="8" stroke-linecap="round"/><ellipse cx="563" cy="213.5" rx="6" ry="3.5" fill="#3e2723"/><path d="M536 161 Q525 171.5 526 182" stroke="#1e88e5" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="526" cy="182" r="3.4" fill="#f5d3b3"/><path d="M534 189 Q531 157 548 154 Q565 157 562 189 Z" fill="#1e88e5"/><path d="M548 158 V188" stroke="#000" stroke-opacity=".25" stroke-width="1.4"/><path d="M538 180 h6 M552 180 h6" stroke="#000" stroke-opacity=".2" stroke-width="1.4"/><rect x="537" y="151" width="22" height="6" rx="3" fill="#e53935"/><path d="M553 155 l3 15" stroke="#e53935" stroke-width="5" stroke-linecap="round"/><path d="M560 161 Q570 148.5 568 136" stroke="#1e88e5" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="568" cy="136" r="3.4" fill="#f5d3b3"/><g transform="translate(565 122) scale(1.0)"><rect x="0" y="0" width="10" height="13" rx="2" fill="#ffe08a" stroke="#fff" stroke-width="1.5"/><rect x="0" y="-3" width="10" height="4" rx="2" fill="#fff"/><path d="M10 3 q5 0 5 4 q0 4 -5 4" stroke="#fff" stroke-width="1.6" fill="none"/></g><circle cx="548" cy="145" r="11" fill="#f5d3b3"/><circle cx="544" cy="144.5" r="1.4" fill="#1d3a2a"/><circle cx="552" cy="144.5" r="1.4" fill="#1d3a2a"/><path d="M544 149 Q548 152.5 552 149" stroke="#1d3a2a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="541" cy="148" r="2.2" fill="#ff8a80" opacity=".55"/><circle cx="555" cy="148" r="2.2" fill="#ff8a80" opacity=".55"/><path d="M537 144 Q548 123 559 144" stroke="#90a4ae" stroke-width="2.5" fill="none"/><circle cx="537" cy="145" r="4.5" fill="#e91e63"/><circle cx="559" cy="145" r="4.5" fill="#e91e63"/></g>
+<g class="wagen"><path d="M580 180 V136 M660 180 V136" stroke="#6d4c41" stroke-width="2.5"/><path d="M580 138 Q620 154 660 138" stroke="#795548" stroke-width="1.2" fill="none"/><path d="M581.7 142.2 L589.7 142.2 L585.7 151.2 Z" fill="#e53935"/><path d="M593.1 148.8 L601.1 148.8 L597.1 157.8 Z" fill="#ffd84d"/><path d="M604.6 152.7 L612.6 152.7 L608.6 161.7 Z" fill="#1e88e5"/><path d="M616 154 L624 154 L620 163 Z" fill="#5cb85c"/><path d="M627.4 152.7 L635.4 152.7 L631.4 161.7 Z" fill="#ff9800"/><path d="M638.9 148.8 L646.9 148.8 L642.9 157.8 Z" fill="#e53935"/><path d="M650.3 142.2 L658.3 142.2 L654.3 151.2 Z" fill="#ffd84d"/><path d="M588 180 v-6" stroke="#7cb342" stroke-width="1.9"/><circle cx="583.5" cy="172.5" r="4.5" fill="#2e7d32"/><circle cx="592.5" cy="172.5" r="4.5" fill="#388e3c"/><circle cx="588" cy="168" r="5.2" fill="#2e7d32"/><circle cx="585.8" cy="164.2" r="3.8" fill="#1b5e20"/><circle cx="591" cy="163.5" r="3.8" fill="#1b5e20"/><circle cx="586.5" cy="166.5" r="1.5" fill="#81c784" opacity=".7"/><path d="M594 180 v-6" stroke="#7cb342" stroke-width="1.9"/><circle cx="589.5" cy="172.5" r="4.5" fill="#388e3c"/><circle cx="598.5" cy="172.5" r="4.5" fill="#1b5e20"/><circle cx="594" cy="168" r="5.2" fill="#388e3c"/><circle cx="591.8" cy="164.2" r="3.8" fill="#1b5e20"/><circle cx="597" cy="163.5" r="3.8" fill="#388e3c"/><circle cx="592.5" cy="166.5" r="1.5" fill="#81c784" opacity=".7"/><path d="M600 180 v-6" stroke="#7cb342" stroke-width="1.9"/><circle cx="595.5" cy="172.5" r="4.5" fill="#1b5e20"/><circle cx="604.5" cy="172.5" r="4.5" fill="#388e3c"/><circle cx="600" cy="168" r="5.2" fill="#1b5e20"/><circle cx="597.8" cy="164.2" r="3.8" fill="#2e7d32"/><circle cx="603" cy="163.5" r="3.8" fill="#2e7d32"/><circle cx="598.5" cy="166.5" r="1.5" fill="#81c784" opacity=".7"/><rect x="604" y="160" width="28" height="20" rx="2" fill="#c62828"/><path d="M604 170 h28" stroke="#8e1b1b" stroke-width="1.5"/><rect x="606" y="148" width="4.5" height="14" rx="2" fill="#2e7d32"/><rect x="606.6" y="145" width="3.2" height="4" fill="#ffd84d"/><rect x="613" y="148" width="4.5" height="14" rx="2" fill="#2e7d32"/><rect x="613.6" y="145" width="3.2" height="4" fill="#ffd84d"/><rect x="620" y="148" width="4.5" height="14" rx="2" fill="#2e7d32"/><rect x="620.6" y="145" width="3.2" height="4" fill="#ffd84d"/><rect x="627" y="148" width="4.5" height="14" rx="2" fill="#2e7d32"/><rect x="627.6" y="145" width="3.2" height="4" fill="#ffd84d"/><rect x="636" y="156" width="22" height="24" rx="4" fill="#263238"/><circle cx="647" cy="165" r="6.5" fill="#546e7a"/><circle cx="647" cy="165" r="2.6" fill="#263238"/><circle cx="647" cy="176" r="2" fill="#546e7a"/><g class="notes" fill="#1f7fb8" font-family="sans-serif" font-weight="700"><text x="654" y="148" font-size="15">♪</text><text x="666" y="134" font-size="17">♫</text><text x="644" y="128" font-size="13">♪</text></g><rect x="574" y="178" width="92" height="26" rx="3" fill="#a1683a"/><path d="M574 187 h92 M574 196 h92" stroke="#7b5233" stroke-width="1.6"/><rect x="574" y="178" width="92" height="26" rx="3" fill="none" stroke="#6d4c2f" stroke-width="2.5"/><g class="wheel" style="transform-origin:592px 209px"><circle cx="592" cy="209" r="10" fill="#37474f"/><circle cx="592" cy="209" r="6.5" fill="#cfd8dc"/><path d="M585.5 209 h13 M592 202.5 v13" stroke="#37474f" stroke-width="1.6"/><circle cx="592" cy="209" r="2" fill="#37474f"/></g><g class="wheel" style="transform-origin:648px 209px"><circle cx="648" cy="209" r="10" fill="#37474f"/><circle cx="648" cy="209" r="6.5" fill="#cfd8dc"/><path d="M641.5 209 h13 M648 202.5 v13" stroke="#37474f" stroke-width="1.6"/><circle cx="648" cy="209" r="2" fill="#37474f"/></g><path d="M666 190 L666 180" stroke="#5d4037" stroke-width="3.5" stroke-linecap="round"/></g>
+<g class="walker" style="animation-delay:-0.1s"><ellipse cx="694" cy="216" rx="18.9" ry="3.7" fill="#000" opacity=".13"/><path d="M688.8 184.5 L680.4 211.8" stroke="#1e88e5" stroke-width="8.4" stroke-linecap="round"/><ellipse cx="682.5" cy="213.4" rx="6.3" ry="3.7" fill="#3e2723"/><path d="M699.2 184.5 L707.6 211.8" stroke="#1e88e5" stroke-width="8.4" stroke-linecap="round"/><ellipse cx="709.8" cy="213.4" rx="6.3" ry="3.7" fill="#3e2723"/><path d="M681.4 158.2 Q669.5 169.1 666 180" stroke="#ffca28" stroke-width="7.4" fill="none" stroke-linecap="round"/><circle cx="666" cy="180" r="3.6" fill="#d9a477"/><path d="M679.3 187.7 Q676.1 154 694 150.9 Q711.9 154 708.7 187.7 Z" fill="#ffca28"/><path d="M694 155.1 V186.6" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/><path d="M683.5 178.2 h6.3 M698.2 178.2 h6.3" stroke="#000" stroke-opacity=".2" stroke-width="1.5"/><path d="M706.6 158.2 Q714.5 169.8 711.9 181.3" stroke="#ffca28" stroke-width="7.4" fill="none" stroke-linecap="round"/><circle cx="711.9" cy="181.3" r="3.6" fill="#d9a477"/><circle cx="694" cy="141.4" r="11.6" fill="#d9a477"/><circle cx="689.8" cy="140.9" r="1.5" fill="#1d3a2a"/><circle cx="698.2" cy="140.9" r="1.5" fill="#1d3a2a"/><path d="M689.8 145.6 Q694 149.3 698.2 145.6" stroke="#1d3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="686.6" cy="144.6" r="2.3" fill="#ff8a80" opacity=".55"/><circle cx="701.4" cy="144.6" r="2.3" fill="#ff8a80" opacity=".55"/><path d="M677.2 140.4 Q681.4 121.5 694 122.5 Q706.6 121.5 711.9 142.5 Q694 135.1 677.2 140.4 Z" fill="#ffca28"/></g>
+<g class="walker" style="animation-delay:-0.7s"><ellipse cx="738" cy="214" rx="14.8" ry="2.9" fill="#000" opacity=".13"/><path d="M733.9 189.4 L727.3 210.7" stroke="#37474f" stroke-width="6.6" stroke-linecap="round"/><ellipse cx="729" cy="211.9" rx="4.9" ry="2.9" fill="#3e2723"/><path d="M742.1 189.4 L748.7 210.7" stroke="#37474f" stroke-width="6.6" stroke-linecap="round"/><ellipse cx="750.3" cy="211.9" rx="4.9" ry="2.9" fill="#3e2723"/><path d="M728.2 168.9 Q722 178.3 724.1 187.8" stroke="#5cb85c" stroke-width="5.7" fill="none" stroke-linecap="round"/><circle cx="724.1" cy="187.8" r="2.8" fill="#e8b98f"/><path d="M726.5 191.9 Q724.1 165.6 738 163.2 Q751.9 165.6 749.5 191.9 Z" fill="#5cb85c"/><path d="M738 166.4 V191" stroke="#000" stroke-opacity=".25" stroke-width="1.1"/><path d="M729.8 184.5 h4.9 M741.3 184.5 h4.9" stroke="#000" stroke-opacity=".2" stroke-width="1.1"/><rect x="729" y="160.7" width="18" height="4.9" rx="2.5" fill="#ff80ab"/><path d="M742.1 164 l2.5 12.3" stroke="#ff80ab" stroke-width="4.1" stroke-linecap="round"/><path d="M747.8 168.9 Q756 174.2 751.1 179.6" stroke="#5cb85c" stroke-width="5.7" fill="none" stroke-linecap="round"/><circle cx="751.1" cy="179.6" r="2.8" fill="#e8b98f"/><circle cx="753.6" cy="182.8" r="4.9" fill="#263238"/><circle cx="751.9" cy="181.2" r="1.5" fill="#fff" opacity=".6"/><circle cx="738" cy="155.8" r="9" fill="#e8b98f"/><circle cx="734.7" cy="155.4" r="1.1" fill="#1d3a2a"/><circle cx="741.3" cy="155.4" r="1.1" fill="#1d3a2a"/><path d="M734.7 159.1 Q738 161.9 741.3 159.1" stroke="#1d3a2a" stroke-width="1.1" fill="none" stroke-linecap="round"/><circle cx="732.3" cy="158.2" r="1.8" fill="#ff8a80" opacity=".55"/><circle cx="743.7" cy="158.2" r="1.8" fill="#ff8a80" opacity=".55"/><path d="M729 155.8 Q728.2 144.3 738 145.1 Q747.8 144.3 747 155.8 Q742.9 149.2 729 155.8 Z" fill="#6d4c41"/><path d="M746.2 152.5 q6.6 4.9 2.5 13.1" stroke="#6d4c41" stroke-width="4.1" fill="none" stroke-linecap="round"/></g>
+<g class="walker" style="animation-delay:-0.25s"><ellipse cx="780" cy="216" rx="18.9" ry="3.7" fill="#000" opacity=".13"/><path d="M774.8 184.5 L766.4 211.8" stroke="#263238" stroke-width="8.4" stroke-linecap="round"/><ellipse cx="768.5" cy="213.4" rx="6.3" ry="3.7" fill="#3e2723"/><path d="M785.2 184.5 L793.6 211.8" stroke="#263238" stroke-width="8.4" stroke-linecap="round"/><ellipse cx="795.8" cy="213.4" rx="6.3" ry="3.7" fill="#3e2723"/><path d="M767.4 158.2 Q759.5 170.3 762.1 182.4" stroke="#7b1fa2" stroke-width="7.4" fill="none" stroke-linecap="round"/><circle cx="762.1" cy="182.4" r="3.6" fill="#e8b98f"/><path d="M765.3 187.7 Q762.1 154 780 150.9 Q797.9 154 794.7 187.7 Z" fill="#7b1fa2"/><path d="M780 155.1 V186.6" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/><path d="M769.5 178.2 h6.3 M784.2 178.2 h6.3" stroke="#000" stroke-opacity=".2" stroke-width="1.5"/><rect x="768.5" y="147.8" width="23.1" height="6.3" rx="3.2" fill="#2e7d32"/><path d="M785.2 151.9 l3.2 15.8" stroke="#2e7d32" stroke-width="5.2" stroke-linecap="round"/><path d="M792.6 158.2 Q800.5 169.8 797.9 181.3" stroke="#7b1fa2" stroke-width="7.4" fill="none" stroke-linecap="round"/><circle cx="797.9" cy="181.3" r="3.6" fill="#e8b98f"/><circle cx="780" cy="141.4" r="11.6" fill="#e8b98f"/><circle cx="775.8" cy="140.9" r="1.5" fill="#1d3a2a"/><circle cx="784.2" cy="140.9" r="1.5" fill="#1d3a2a"/><path d="M775.8 145.6 Q780 149.3 784.2 145.6" stroke="#1d3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="772.6" cy="144.6" r="2.3" fill="#ff8a80" opacity=".55"/><circle cx="787.4" cy="144.6" r="2.3" fill="#ff8a80" opacity=".55"/><path d="M769.5 135.1 L768.5 120.4 L774.8 127.8 L780 118.3 L785.2 127.8 L791.5 120.4 L790.5 135.1 Z" fill="#ffc107" stroke="#e09b00" stroke-width="1.3" stroke-linejoin="round"/><circle cx="780" cy="129.9" r="2.1" fill="#2e7d32"/><path d="M768.5 140.4 q-4.2 -8.4 2.1 -9.5" fill="#5d4037"/></g>
+<path class="arc" d="M854 154 Q880 100 900 214" stroke="#1d3a2a" stroke-width="2.2" stroke-dasharray="2 7" fill="none" stroke-linecap="round" opacity=".8"/>
+<g class="walker" style="animation-delay:-0.55s"><ellipse cx="826" cy="218" rx="19.4" ry="3.8" fill="#000" opacity=".13"/><path d="M820.6 185.6 L809.4 213.7" stroke="#37474f" stroke-width="8.6" stroke-linecap="round"/><ellipse cx="811.5" cy="215.3" rx="6.5" ry="3.8" fill="#3e2723"/><path d="M831.4 185.6 L842.6 213.7" stroke="#37474f" stroke-width="8.6" stroke-linecap="round"/><ellipse cx="844.8" cy="215.3" rx="6.5" ry="3.8" fill="#3e2723"/><path d="M813 158.6 Q804.9 171 807.6 183.4" stroke="#e53935" stroke-width="7.6" fill="none" stroke-linecap="round"/><circle cx="807.6" cy="183.4" r="3.7" fill="#f5d3b3"/><path d="M810.9 188.8 Q807.6 154.3 826 151 Q844.4 154.3 841.1 188.8 Z" fill="#e53935"/><path d="M826 155.4 V187.8" stroke="#000" stroke-opacity=".25" stroke-width="1.5"/><path d="M815.2 179.1 h6.5 M830.3 179.1 h6.5" stroke="#000" stroke-opacity=".2" stroke-width="1.5"/><rect x="814.1" y="147.8" width="23.8" height="6.5" rx="3.2" fill="#ffd84d"/><path d="M831.4 152.1 l3.2 16.2" stroke="#ffd84d" stroke-width="5.4" stroke-linecap="round"/><path d="M839 158.6 Q853 148.3 858.4 138.1" stroke="#e53935" stroke-width="7.6" fill="none" stroke-linecap="round"/><circle cx="858.4" cy="138.1" r="3.7" fill="#f5d3b3"/><circle cx="826" cy="141.3" r="11.9" fill="#f5d3b3"/><circle cx="821.7" cy="140.8" r="1.5" fill="#1d3a2a"/><circle cx="830.3" cy="140.8" r="1.5" fill="#1d3a2a"/><path d="M821.7 145.6 Q826 149.4 830.3 145.6" stroke="#1d3a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="818.4" cy="144.6" r="2.4" fill="#ff8a80" opacity=".55"/><circle cx="833.6" cy="144.6" r="2.4" fill="#ff8a80" opacity=".55"/><path d="M813.6 139.2 Q814.1 123 826 123 Q837.9 123 838.4 139.2 Z" fill="#1e88e5"/><rect x="813" y="135.9" width="25.9" height="5.4" rx="2.7" fill="#fff"/><path d="M816.3 129.4 H835.7" stroke="#fff" stroke-width="2.2" stroke-opacity=".7"/><circle cx="826" cy="120.8" r="4.9" fill="#fff"/></g>
+<g class="kugel"><ellipse cx="904" cy="218" rx="9" ry="2.2" fill="#000" opacity=".15"/><circle cx="904" cy="211" r="7.5" fill="#263238"/><circle cx="901.5" cy="208.5" r="2.2" fill="#fff" opacity=".55"/></g>
+</g>
+</svg>
+    </div>
+    <div class="wrap">
+      <!-- PREMIUM-PARTNER (bezahlte Banner, im Admin bei der Gaststätte aktivieren) -->
+      <section class="block" id="premiumBlock">
+        <div class="sec-head"><h2><i class="fa-solid fa-star"></i> Gaststätten-Tipps für eure Kohlfahrt</h2><a href="#banner" class="small-link"><i class="fa-solid fa-bullhorn"></i> Hier könnte Ihre Gaststätte stehen</a></div>
+        <div class="premium-grid" id="premiumHost"></div>
+      </section>
+
+      <section class="block">
+        <div class="sec-head"><h2><i class="fa-solid fa-map-location-dot"></i> Karte: Strecken, Gaststätten &amp; Bollerwagen</h2>
+          <div class="chips" id="startLayers"></div></div>
+        <div class="card" style="padding:10px"><div class="map" id="startMap" style="height:520px"></div>
+          <div class="legend"><span><i class="dot" style="--c:#1e8c0b"></i> Kohlfahrt-Strecken</span><span><i class="dot" style="--c:#2e7d32"></i> Gaststätten mit Kohlfahrt</span><span><i class="dot" style="--c:#e65100"></i> mit Boßelangebot</span><span><i class="dot" style="--c:#f59e0b"></i> Bollerwagenverleih</span></div></div>
+      </section>
+
+      <section class="block"><div class="ads" data-ads="4"></div></section>
+
+      <section class="block">
+        <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Neue Kohlfahrten-Strecken</h2>
+        <div class="toprow" id="newRoutes"></div>
+      </section>
+      <section class="block">
+        <h2><i class="fa-solid fa-trophy"></i> Top bewertete Strecken</h2>
+        <div class="toprow" id="topRoutes"></div>
+      </section>
+
+      <section class="block">
+        <div class="sec-head"><h2><i class="fa-solid fa-dice"></i> Spiele für unterwegs</h2><a class="small-link" href="#spiele">Alle Spiele <i class="fa-solid fa-arrow-right"></i></a></div>
+        <div class="games-grid" id="gameTeaser"></div>
+      </section>
+
+      <section class="block">
+        <div class="guide-cta card">
+          <img src="assets/img/guide-cover.png" alt="Titelseite Kohlfahrten-Guide" width="420" height="594">
+          <div>
+            <span class="pill"><i class="fa-solid fa-file-pdf"></i> Kostenloser Download</span>
+            <h2 style="margin:.3em 0">Der große Kohlfahrten-Guide</h2>
+            <p>Planung, Packliste, Kohlkönig-Wahl und über 20 Spiele mit Materialliste – kompakt als PDF zum Ausdrucken und Mitnehmen.</p>
+            <div class="btnrow"><a class="btn lg" href="downloads/kohlfahrten-guide.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down"></i> Guide herunterladen</a><a class="btn lg ghost" href="#infos"><i class="fa-solid fa-circle-info"></i> Infos online lesen</a></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2><i class="fa-solid fa-circle-question"></i> Kohlfahrt in 4 Schritten</h2>
+        <div class="howto four">
+          <div class="card"><div class="num">1</div><div><h3><i class="fa-solid fa-calendar-check"></i> Termin &amp; Gaststätte</h3><p class="muted">Beliebte Samstage im Januar und Februar sind früh ausgebucht – rechtzeitig reservieren.</p></div></div>
+          <div class="card"><div class="num">2</div><div><h3><i class="fa-solid fa-route"></i> Strecke wählen</h3><p class="muted">Einige Kilometer über ruhige Wege, mit Zeit für Pausen und Spiele.</p></div></div>
+          <div class="card"><div class="num">3</div><div><h3><i class="fa-solid fa-trailer"></i> Bollerwagen packen</h3><p class="muted">Getränke, Snacks, Spiele, Warnwesten – und Schnapsgläser am Band.</p></div></div>
+          <div class="card"><div class="num">4</div><div><h3><i class="fa-solid fa-crown"></i> Kohlkönig krönen</h3><p class="muted">Nach dem Grünkohl wird das neue Königspaar gekürt – und plant die nächste Tour.</p></div></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2><i class="fa-solid fa-chart-simple"></i> Kohlfahrten.de in Zahlen</h2>
+        <div class="stats" id="startStats"></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- STRECKEN -->
+  <section class="view hidden" id="v-strecken">
+    <div class="wrap">
+      <div class="page-head">
+        <div><h1><i class="fa-solid fa-route"></i> Kohlfahrten-Strecken</h1><p>Touren für eure Kohlfahrt – mit Länge, Wegbeschaffenheit, Fotos und Bewertungen. Klicke auf eine Strecke für alle Details.</p></div>
+        <a class="btn" href="#eintragen"><i class="fa-solid fa-plus"></i> Strecke eintragen</a>
+      </div>
+      <div class="card filters">
+        <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="rSearch" placeholder="Titel, Ort oder PLZ suchen…"></div>
+        <div class="chips" id="rCats"></div>
+        <select id="rSort" aria-label="Sortierung">
+          <option value="rating">★ Beste Bewertung</option>
+          <option value="new">Neueste zuerst</option>
+          <option value="short">Kürzeste zuerst</option>
+          <option value="long">Längste zuerst</option>
+          <option value="az">A–Z</option>
+        </select>
+        <details class="more" style="width:100%"><summary><i class="fa-solid fa-sliders"></i> Nach Besonderheiten filtern <span id="rFeatCount"></span></summary><div class="featfilter" id="rFeats"></div></details>
+      </div>
+      <div class="ads compact" data-ads="2" style="margin-bottom:16px"></div>
+      <div class="split">
+        <div class="list" id="routeList"></div>
+        <div class="mapbox card" style="padding:10px">
+          <div class="map" id="routesMap"></div>
+          <div class="legend" id="routesLegend"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EINTRAGEN -->
+  <section class="view hidden" id="v-eintragen">
+    <div class="wrap">
+      <div class="page-head">
+        <div><h1><i class="fa-solid fa-map-pin"></i> Strecke eintragen</h1><p>Kennt ihr eine schöne Kohltour? Keine Anmeldung nötig: Start und Ziel in die Karte klicken, Route anpassen, Besonderheiten angeben. Jede Strecke wird vor der Veröffentlichung geprüft.</p></div>
+      </div>
+      <div id="routeFormHost" style="padding-bottom:40px"></div>
+    </div>
+  </section>
+
+  <!-- GASTHÄUSER -->
+  <section class="view hidden" id="v-gaststaetten">
+    <div class="wrap">
+      <div class="page-head">
+        <div><h1><i class="fa-solid fa-utensils"></i> Gaststätten</h1><p>Gasthöfe für den Abschluss eurer Kohlfahrt – mit Grünkohl-Angeboten, Boßelpartys, Preisen und direktem Link. Angaben ohne Gewähr, bitte direkt beim Haus bestätigen lassen.</p></div>
+        <div class="btnrow"><a class="btn ghost" href="#banner"><i class="fa-solid fa-bullhorn"></i> Banner buchen</a><button class="btn" id="ghSuggest"><i class="fa-solid fa-plus"></i> Gaststätte eintragen</button></div>
+      </div>
+      <div class="card filters">
+        <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="ghSearch" placeholder="Name, Ort oder PLZ…"></div>
+        <select id="ghRegion" aria-label="Region"><option value="">Alle Regionen</option></select>
+        <label class="chip"><input type="checkbox" id="ghOnlyKohl"><i class="fa-solid fa-leaf"></i> Kohlfahrt-Angebot</label>
+        <label class="chip"><input type="checkbox" id="ghOnlyBossel"><i class="fa-solid fa-bowling-ball"></i> Boßelveranstaltung</label>
+        <details class="more" style="width:100%"><summary><i class="fa-solid fa-sliders"></i> Nach Leistungen filtern</summary><div class="featfilter" id="ghFeats"></div></details>
+      </div>
+      <div class="split">
+        <div class="list" id="ghList"></div>
+        <div class="mapbox card" style="padding:10px"><div class="map" id="ghMap"></div>
+          <div class="legend"><span><i class="dot" style="--c:#2e7d32"></i> Kohlfahrt-Angebot</span><span><i class="dot" style="--c:#e65100"></i> Boßelangebot</span><span><i class="dot" style="--c:#8d6e63"></i> Gaststätte</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERLEIH -->
+  <section class="view hidden" id="v-bollerwagen">
+    <div class="wrap">
+      <div class="page-head">
+        <div><h1><i class="fa-solid fa-trailer"></i> Bollerwagenverleih</h1><p>Bollerwagen für eure Kohlfahrt – mit Ausstattung, Preisen und Kontakt. Oder gleich einen eigenen Bollerwagen bei <a href="https://www.bossel.de/Bollerwagen_1" target="_blank" rel="noopener">bossel.de</a> holen.</p></div>
+        <button class="btn" id="vlSuggest"><i class="fa-solid fa-plus"></i> Verleih eintragen</button>
+      </div>
+      <div class="card filters">
+        <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="vlSearch" placeholder="Name, Ort oder PLZ…"></div>
+        <details class="more" style="width:100%" open><summary><i class="fa-solid fa-sliders"></i> Ausstattung muss enthalten</summary><div class="featfilter" id="vlFeats"></div></details>
+      </div>
+      <div class="split">
+        <div class="list" id="vlList"></div>
+        <div class="mapbox card" style="padding:10px"><div class="map" id="vlMap"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section class="view hidden" id="v-admin">
+    <div class="wrap" id="adminHost" style="padding-bottom:40px"></div>
+  </section>
+
+  <!-- SPIELE -->
+  <section class="view hidden" id="v-spiele">
+    <div class="wrap">
+      <div class="page-head">
+        <div><h1><i class="fa-solid fa-dice"></i> Kohlfahrten-Spiele</h1><p>Die besten Spiele für unterwegs und für den Saal – mit Materialliste. Alle Spiele gibt es auch im <a href="downloads/kohlfahrten-guide.pdf" target="_blank" rel="noopener">PDF-Guide</a> zum Ausdrucken.</p></div>
+        <a class="btn" href="https://www.bossel.de/Kohltour-Spiele" target="_blank" rel="noopener"><i class="fa-solid fa-store"></i> Spiele-Sets bei bossel.de</a>
+      </div>
+      <div class="card filters">
+        <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="gSearch" placeholder="Spiel oder Material suchen…"></div>
+        <div class="chips" id="gTags"></div>
+      </div>
+      <div class="games-grid" id="gamesHost"></div>
+      <section class="block">
+        <h2><i class="fa-solid fa-crown"></i> So wird der Kohlkönig gekürt</h2>
+        <div class="king-grid" id="kingHost"></div>
+        <div class="btnrow" style="margin-top:14px"><a class="btn amber" href="https://www.bossel.de/Kohlkoenig-Koenigin-Krone-Kronen" target="_blank" rel="noopener"><i class="fa-solid fa-crown" style="color:#3a2600"></i> Kronen &amp; Insignien</a><a class="btn ghost" href="https://www.bossel.de/Kohlorden-Kohlmedaille-Kohltourorden" target="_blank" rel="noopener"><i class="fa-solid fa-medal"></i> Kohlorden &amp; Medaillen</a></div>
+      </section>
+      <section class="block"><div class="ads" data-ads="4"></div></section>
+    </div>
+  </section>
+
+  <!-- INFOS -->
+  <section class="view hidden" id="v-infos">
+    <div class="wrap">
+      <div class="page-head"><div><h1><i class="fa-solid fa-circle-info"></i> Infos rund um die Kohlfahrt</h1><p>Was eine Kohlfahrt ausmacht, wie ihr sie plant und was in den Bollerwagen gehört.</p></div>
+        <a class="btn amber" href="downloads/kohlfahrten-guide.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-arrow-down" style="color:#3a2600"></i> Alles als PDF-Guide</a></div>
+      <div class="info-layout">
+        <nav class="card info-toc" aria-label="Inhalt">
+          <b><i class="fa-solid fa-list"></i> Inhalt</b>
+          <a href="#infos" data-jump="i-was">Was ist eine Kohlfahrt?</a>
+          <a href="#infos" data-jump="i-ablauf">Ablauf eines Kohlfahrt-Tages</a>
+          <a href="#infos" data-jump="i-planung">Planung &amp; Organisation</a>
+          <a href="#infos" data-jump="i-pack">Packliste für den Bollerwagen</a>
+          <a href="#infos" data-jump="i-koenig">Kohlkönig &amp; Kohlkönigin</a>
+          <a href="#infos" data-jump="i-kohl">Grünkohl, Pinkel &amp; Co.</a>
+          <a href="#infos" data-jump="i-sicher">Sicher unterwegs</a>
+          <a href="#infos" data-jump="i-angebote">Geführte Angebote</a>
+          <a href="#infos" data-jump="i-faq">Häufige Fragen</a>
+        </nav>
+        <div class="info-body">
+          <article class="card legal" id="i-was">
+            <h2><i class="fa-solid fa-leaf"></i> Was ist eine Kohlfahrt?</h2>
+            <p>Die Kohlfahrt – je nach Region auch Kohltour, Grünkohlwanderung oder Braunkohlfahrt – ist eine norddeutsche Wintertradition. Freunde, Vereine, Nachbarschaften und Kollegien ziehen gemeinsam mit einem Bollerwagen durch die winterliche Landschaft. Unterwegs wird gespielt, gelacht und Pause gemacht, und am Ende wartet in einer Gaststätte ein deftiges Grünkohlessen.</p>
+            <p>Die Saison beginnt traditionell mit dem ersten Frost im Herbst, denn dann schmeckt der Grünkohl am besten. Die meisten Touren finden von Januar bis März statt, oft an Samstagen. Je nach Region gehören Musik, Tanz und die Krönung eines Kohlkönigs oder Kohlkönigspaares dazu.</p>
+            <div class="info-facts">
+              <div><i class="fa-solid fa-calendar"></i><b>Saison</b><span>November – März</span></div>
+              <div><i class="fa-solid fa-person-walking"></i><b>Strecke</b><span>meist 3–8 km</span></div>
+              <div><i class="fa-solid fa-users"></i><b>Gruppe</b><span>ab ca. 8 Personen</span></div>
+              <div><i class="fa-solid fa-clock"></i><b>Dauer</b><span>Nachmittag bis Nacht</span></div>
+            </div>
+          </article>
+          <article class="card legal" id="i-ablauf">
+            <h2><i class="fa-solid fa-clock"></i> Ablauf eines Kohlfahrt-Tages</h2>
+            <ol class="timeline">
+              <li><b>Mittags / früher Nachmittag:</b> Treffen am Startpunkt, Begrüßung durch das amtierende Königspaar, Gruppeneinteilung – zum Beispiel mit farbigen Schnapsgläsern am Band oder Buttons.</li>
+              <li><b>Nachmittag:</b> Wanderung mit dem Bollerwagen. Unterwegs Boßeln, Teebeutel-Weitwurf und andere Spiele, Pausen an Kreuzungen und markanten Punkten.</li>
+              <li><b>Gegen 18–19 Uhr:</b> Ankunft in der Gaststätte, oft gemeinsam mit anderen Gruppen im Saal.</li>
+              <li><b>Abends:</b> Grünkohl mit Pinkel, Kochwurst, Kassler und Kartoffeln – danach Musik und Tanz.</li>
+              <li><b>Höhepunkt:</b> Krönung des neuen Kohlkönigs bzw. Königspaares, das die Tour im nächsten Jahr organisiert.</li>
+            </ol>
+          </article>
+          <article class="card legal" id="i-planung">
+            <h2><i class="fa-solid fa-clipboard-check"></i> Planung &amp; Organisation</h2>
+            <ul class="check-list">
+              <li><b>Früh buchen:</b> Beliebte Samstage im Januar und Februar sind in vielen Gaststätten Wochen vorher ausgebucht.</li>
+              <li><b>Angebot wählen:</b> Entweder ein fertiges Paket der Gaststätte (Essen, Getränke, Musik, manchmal Bollerwagen und Boßelzubehör) oder alles selbst organisieren.</li>
+              <li><b>Strecke festlegen:</b> Einige Kilometer über ruhige Straßen und Feldwege; plant genug Zeit für Pausen ein. Passende Touren findet ihr unter <a href="#strecken">Strecken</a>.</li>
+              <li><b>Rückweg klären:</b> Taxi, Shuttle der Gaststätte, Bus oder Übernachtung – vorher organisieren.</li>
+              <li><b>Bollerwagen besorgen:</b> Eigener Wagen, <a href="#bollerwagen">Verleih</a> oder neu bei <a href="https://www.bossel.de/Bollerwagen_1" target="_blank" rel="noopener">bossel.de</a>.</li>
+              <li><b>Gruppen einteilen:</b> Für Teamspiele z. B. mit farbigen Schnapsgläsern, Buttons oder Bändern.</li>
+            </ul>
+          </article>
+          <article class="card legal" id="i-pack">
+            <h2><i class="fa-solid fa-trailer"></i> Packliste für den Bollerwagen</h2>
+            <div class="pack-grid">
+              <div><h4><i class="fa-solid fa-beer-mug-empty"></i> Getränke &amp; Proviant</h4><ul><li>Bier, Korn, Aufgesetzter, alkoholfreie Getränke</li><li>Wasser und heißer Tee/Glühwein in Thermoskannen</li><li>Snacks, Mettwurst, Laugenbrezeln</li></ul></div>
+              <div><h4><i class="fa-solid fa-whiskey-glass"></i> Gläser &amp; Becher</h4><ul><li><a href="https://www.bossel.de/Schnapsglaeser-am-Band" target="_blank" rel="noopener">Schnapsgläser am Band</a></li><li><a href="https://www.bossel.de/Witzige-Schnapsglaeser-aus-Keramik" target="_blank" rel="noopener">Keramik-Schnapsgläser</a></li><li><a href="https://www.bossel.de/Partybecher-Trinkbecher-mit-Namen-Logo-indivduell" target="_blank" rel="noopener">Becher mit Namen/Logo</a></li></ul></div>
+              <div><h4><i class="fa-solid fa-dice"></i> Spiele</h4><ul><li><a href="https://www.bossel.de/Bosselkugeln-Freizeit_2" target="_blank" rel="noopener">Boßelkugeln</a> und Kescher</li><li>Teebeutel, Bierdeckel, Säcke</li><li><a href="https://www.bossel.de/Kohltour-Spiele" target="_blank" rel="noopener">Spiele-Sets</a> und Preise</li></ul></div>
+              <div><h4><i class="fa-solid fa-vest"></i> Sicherheit &amp; Kleidung</h4><ul><li><a href="https://www.bossel.de/Kohltour-Kohlfahrt-Warnwesten" target="_blank" rel="noopener">Warnwesten</a> für alle</li><li>Wetterfeste Kleidung, feste Schuhe</li><li>Taschenlampe, Erste-Hilfe-Set, Müllbeutel</li></ul></div>
+            </div>
+          </article>
+          <article class="card legal" id="i-koenig">
+            <h2><i class="fa-solid fa-crown"></i> Kohlkönig &amp; Kohlkönigin</h2>
+            <p>Der Höhepunkt des Abends: Das neue Königspaar wird gekürt. Es trägt die Krone ein Jahr lang – und organisiert die nächste Kohlfahrt. Wie gewählt wird, entscheidet jede Gruppe selbst, zum Beispiel durch Wiegen vor und nach dem Essen, die meisten Portionen Grünkohl, Punkte aus den Spielen oder einfach per Los.</p>
+            <p>Passend dazu gibt es <a href="https://www.bossel.de/Kohlkoenig-Koenigin-Krone-Kronen" target="_blank" rel="noopener">Kronen</a> und <a href="https://www.bossel.de/Kohlorden-Kohlmedaille-Kohltourorden" target="_blank" rel="noopener">Kohlorden</a> bei bossel.de.</p>
+          </article>
+          <article class="card legal" id="i-kohl">
+            <h2><i class="fa-solid fa-bowl-food"></i> Grünkohl, Pinkel &amp; Co.</h2>
+            <p>Serviert wird Grünkohl – in Bremen sagt man auch Braunkohl – meist mit Salz- oder Bratkartoffeln. Dazu gehören je nach Region Pinkel (eine geräucherte Grützwurst), Kochwurst bzw. Mettenden, Kassler und Speck. Im Oldenburger Land und rund um Bremen ist der Pinkel unverzichtbar, anderswo gibt es Bregenwurst. Viele Gaststätten bieten inzwischen auch vegetarische oder vegane Varianten an.</p>
+          </article>
+          <article class="card legal" id="i-sicher">
+            <h2><i class="fa-solid fa-shield-halved"></i> Sicher unterwegs</h2>
+            <ul class="check-list">
+              <li>Warnwesten tragen – besonders auf Straßenabschnitten und in der Dämmerung.</li>
+              <li>Beim Boßeln auf den Verkehr achten, einen „Ansager“ für Autos bestimmen und Abstand zum Werfer halten.</li>
+              <li>Genug Wasser und alkoholfreie Getränke einpacken, regelmäßig essen.</li>
+              <li>Müll wieder mitnehmen und Felder sowie Gräben sauber hinterlassen.</li>
+              <li>Heimfahrt vorher organisieren – nach der Kohlfahrt fährt niemand selbst.</li>
+            </ul>
+          </article>
+          <article class="card legal" id="i-angebote">
+            <h2><i class="fa-solid fa-map-signs"></i> Geführte Angebote</h2>
+            <p>Wer nicht selbst planen möchte, bucht ein Komplettpaket. Einige Beispiele aus unserer <a href="#gaststaetten">Gaststätten-Liste</a>:</p>
+            <ul class="check-list">
+              <li><b>Grünkohlwanderung in Lingen (Ems):</b> etwa 5 km entlang der Ems mit sechs Bier-Stationen und anschließendem Grünkohl-Buffet, 4–15 Personen, Buchung bei der Tourist-Information Lingen.</li>
+              <li><b>Kohlfahrt als geführte Boßeltour:</b> samstags von Ende Januar bis Anfang März beim Hotel Schute in Emstek, mit Boßelwagen und Verpflegung.</li>
+              <li><b>Boßelpartys im Emsland:</b> Gaststätten wie Westhus in Dörpen oder Spieker-Wübbel in Spelle-Venhaus richten Boßelpartys für viele Gruppen aus.</li>
+            </ul>
+          </article>
+          <article class="card legal" id="i-faq">
+            <h2><i class="fa-solid fa-circle-question"></i> Häufige Fragen</h2>
+            <details class="faq"><summary>Wie lang sollte eine Kohlfahrt-Strecke sein?</summary><p>Meist reichen 3 bis 8 Kilometer. Mit Spielen und Pausen ist man damit mehrere Stunden unterwegs.</p></details>
+            <details class="faq"><summary>Wann ist Kohlfahrt-Saison?</summary><p>Von November bis März, die meisten Touren finden im Januar und Februar statt.</p></details>
+            <details class="faq"><summary>Brauche ich einen Bollerwagen?</summary><p>Ja – er ist das Herzstück jeder Kohlfahrt. Ihr könnt einen mieten, viele Gaststätten stellen ihn im Paket, oder ihr kauft einen bei bossel.de.</p></details>
+            <details class="faq"><summary>Was kostet eine Kohlfahrt?</summary><p>Ein Grünkohlessen „satt“ gibt es ab etwa 20 €, All-inclusive-Abende mit Getränken, DJ und Tanz kosten meist 60 bis 85 € pro Person. Pakete mit Übernachtung liegen darüber.</p></details>
+            <details class="faq"><summary>Kann ich meine Strecke oder Gaststätte eintragen?</summary><p>Ja! Über <a href="#eintragen">Strecke eintragen</a> bzw. <a href="#gaststaetten">Gaststätte eintragen</a> – ohne Anmeldung. Gaststätten können zusätzlich einen <a href="#banner">Werbeplatz</a> buchen.</p></details>
+          </article>
+          <div class="ads compact" data-ads="2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="view hidden" id="v-shop">
+    <div class="wrap">
+      <div class="page-head"><div><h1><i class="fa-solid fa-store"></i> Shop – alles für die Kohlfahrt</h1><p>Schnapsgläser, Boßelkugeln, Bollerwagen, Kronen und mehr: Unser Partner-Shop <b>bossel.de</b> der Carls GmbH aus Reepsholt hat alles für eure Kohltour.</p></div>
+        <a class="btn lg" href="https://www.bossel.de" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Zu bossel.de</a></div>
+      <div class="shop-top" id="shopTop"></div>
+      <h2 style="margin-top:28px"><i class="fa-solid fa-layer-group" style="color:var(--grass-d)"></i> Alle Kategorien</h2>
+      <div class="shop-grid" id="shopHost"></div>
+      <div class="demo-note" style="margin:22px 0 40px"><i class="fa-solid fa-gift"></i><span>Gut zu wissen: Laut bossel.de liegen jeder Bestellung kostenlos Anleitungen, Spielpläne und ein kleines Boßelbuch bei.</span></div>
+    </div>
+  </section>
+
+  <!-- BANNER BUCHEN -->
+  <section class="view hidden" id="v-banner">
+    <div class="wrap">
+      <div class="page-head"><div><h1><i class="fa-solid fa-bullhorn"></i> Werben auf Kohlfahrten.de</h1><p>Ihre Gaststätte prominent auf der Startseite und ganz oben in der Gaststätten-Liste – genau dann, wenn Gruppen ihre Kohlfahrt planen.</p></div></div>
+      <div class="pkg-grid">
+        <div class="card pkg"><i class="fa-solid fa-utensils"></i><h3>Basis-Eintrag</h3><div class="price">kostenlos</div><ul><li>Eintrag in Liste und Karte</li><li>Kohlfahrt- und Boßelangebot</li><li>Link zur Webseite</li></ul></div>
+        <div class="card pkg hot"><span class="pill">Beliebt</span><i class="fa-solid fa-star"></i><h3>Premium-Banner</h3><div class="price">auf Anfrage</div><ul><li>Banner mit Foto auf der Startseite</li><li>Hervorgehoben ganz oben in der Liste</li><li>Eigener Werbetext und Angebot</li><li>Laufzeit frei wählbar</li></ul></div>
+        <div class="card pkg"><i class="fa-solid fa-calendar-days"></i><h3>Saison-Paket</h3><div class="price">auf Anfrage</div><ul><li>Premium-Banner November bis März</li><li>Hinweis im Kohlfahrten-Guide (PDF)</li><li>Ideal für Kohlfahrt-Pakete</li></ul></div>
+      </div>
+      <div class="card" style="max-width:760px;margin:22px auto 40px" id="bannerFormHost"></div>
+    </div>
+  </section>
+
+  <!-- IMPRESSUM / DATENSCHUTZ: Texte hier anpassen -->
+  <section class="view hidden" id="v-impressum">
+    <div class="wrap"><div class="page-head"><div><h1><i class="fa-solid fa-scale-balanced"></i> Impressum</h1></div></div>
+      <div class="card legal">
+        <p><b>Angaben gemäß § 5 DDG</b></p>
+        <p>Carls GmbH<br>Frieslandstraße 44<br>26446 Reepsholt</p>
+        <p><b>Vertreten durch die Geschäftsführung:</b><br>[Name der Geschäftsführerin / des Geschäftsführers]</p>
+        <p><b>Kontakt</b><br>
+          Telefon: <a href="tel:+494468947985500">04468 9479855-0</a><br>
+          Fax: 04468 9479855-9<br>
+          E-Mail: <a href="mailto:mail@bossel.de">mail@bossel.de</a></p>
+        <p><b>Registereintrag</b><br>Amtsgericht Aurich, HRB 1353</p>
+        <p><b>Umsatzsteuer-Identifikationsnummer</b> gemäß § 27a Umsatzsteuergesetz:<br>DE117931260</p>
+        <p><b>Online-Shop:</b> <a href="https://www.bossel.de" target="_blank" rel="noopener">www.bossel.de</a></p>
+        <p class="muted" style="font-size:.88rem"><b>Hinweis zu Nutzerinhalten:</b> Strecken, Fotos und Beschreibungen werden von Nutzerinnen und Nutzern eingereicht und vor der Veröffentlichung geprüft. Für die Richtigkeit der Angaben (z. B. Wegzustand, Befahrbarkeit) übernehmen wir keine Gewähr. Hinweise auf fehlerhafte oder rechtswidrige Inhalte bitte an mail@bossel.de – wir entfernen sie umgehend.</p>
+      </div></div>
+  </section>
+  <section class="view hidden" id="v-datenschutz">
+    <div class="wrap"><div class="page-head"><div><h1><i class="fa-solid fa-user-lock"></i> Datenschutz</h1></div></div>
+      <div class="card legal">
+        <p class="demo-note"><i class="fa-solid fa-triangle-exclamation"></i><span>Platzhalter – bitte durch eine geprüfte Datenschutzerklärung ersetzen (z. B. per Generator oder Rechtsberatung).</span></p>
+        <p><b>Verantwortlicher:</b> Carls GmbH, Frieslandstraße 44, 26446 Reepsholt, Telefon 04468 9479855-0, E-Mail: mail@bossel.de</p>
+        <p><b>Hosting:</b> Die Seite wird bei der STRATO GmbH, Berlin, gehostet. Beim Aufruf werden technisch notwendige Daten (IP-Adresse, Zeitpunkt, Browser) in Server-Logfiles verarbeitet.</p>
+        <p><b>Eingereichte Inhalte:</b> Beim Eintragen von Strecken, Gaststätten oder Verleihen speichern wir die Angaben, Fotos sowie freiwillig Name und E-Mail für Rückfragen. Name und E-Mail werden nicht veröffentlicht.</p>
+        <p><b>Banner-Anfragen:</b> Wenn Sie einen Werbeplatz anfragen, verarbeiten wir Ihre Angaben (Gaststätte, Ansprechpartner, E-Mail, Telefon) zur Bearbeitung der Anfrage.</p>
+        <p><b>Bewertungen:</b> Um Mehrfachbewertungen zu verhindern, speichern wir einen nicht umkehrbaren Hash-Wert aus IP-Adresse und Browserkennung.</p>
+        <p><b>Karten und Geodienste:</b> Kartenkacheln werden von der OpenStreetMap Foundation (tile.openstreetmap.org) geladen. Links zu bossel.de führen zum Onlineshop der Carls GmbH, Adresssuche und Routenberechnung erfolgen über Photon (komoot), Nominatim (OpenStreetMap Foundation), FOSSGIS-Routing und OSRM. Dabei wird Ihre IP-Adresse an diese Dienste übertragen.</p>
+        <p><b>Cookies:</b> Es wird ausschließlich ein technisch notwendiges Sitzungs-Cookie verwendet (Sicherheitsfrage, Admin-Anmeldung). Schriften und Icons werden lokal ausgeliefert.</p>
+        <p><b>Ihre Rechte:</b> Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Beschwerde bei einer Aufsichtsbehörde. Kontakt: dc@bossel.de</p>
+      </div></div>
+  </section>
+</main>
+
+<footer>
+  <svg viewBox="0 0 1200 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24V14C120 2 240 20 360 10S600 0 720 12 960 2 1080 12 1200 6 1200 6V24Z" fill="#6fc947"/></svg>
+  <div class="wrap foot-grid">
+    <div><img src="assets/img/emblem.png" alt="" width="56" height="56" style="float:left;margin-right:12px;background:#fff;border-radius:50%"><b>Kohlfahrten.de</b><br>Strecken, Gaststätten, Bollerwagen &amp; Spiele für eure Kohltour.</div>
+    <div><b><i class="fa-solid fa-store"></i> Shop bossel.de</b><br><a href="https://www.bossel.de/Witzige-Schnapsglaeser-aus-Keramik" target="_blank" rel="noopener">Keramik-Schnapsgläser</a> · <a href="https://www.bossel.de/schnapsglas-schnapskrug-bedruckt-mit-druck" target="_blank" rel="noopener">Gläser mit Druck</a> · <a href="https://www.bossel.de/Schnapsglaeser-am-Band" target="_blank" rel="noopener">Gläser am Band</a> · <a href="https://www.bossel.de/Bosselkugeln-Freizeit_2" target="_blank" rel="noopener">Boßelkugeln</a></div>
+    <div><a href="downloads/kohlfahrten-guide.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> Guide (PDF)</a> · <a href="#banner">Werben</a> · <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a> · <a href="#admin"><i class="fa-solid fa-user-shield"></i> Admin</a></div>
+  </div>
+</footer>
+
+<div id="modal-root"></div>
+<div id="toasts"></div>
+
+<script src="assets/vendor/leaflet/leaflet.js?v=1.0.0"></script>
+<script src="assets/content.js?v=1.0.0"></script>
+<script src="assets/app.js?v=1.0.0"></script>
+</body>
+</html>

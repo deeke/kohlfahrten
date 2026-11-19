@@ -1,0 +1,20 @@
+# Hilfsfunktion (nur manuell starten): zeigt die Ordner auf dem Strato-Webspace
+# und wo eine Kohlfahrten-Installation (api.php + config.php) liegt.
+name: Strato-Ordner anzeigen
+on: workflow_dispatch
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+      - name: Ordner auflisten
+        env:
+          HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          USER: ${{ secrets.STRATO_SFTP_USER }}
+          PASS: ${{ secrets.STRATO_SFTP_PASS }}
+        run: |
+          HOST=$(echo "$HOST" | sed -E 's#^[a-z]+://##; s#/.*$##; s#:[0-9]+$##' | tr -d '[:space:]')
+          lftp -u "$USER,$PASS" "sftp://$HOST" -e "set sftp:auto-confirm yes; set net:max-retries 2; cls -1 --sort=name /; bye" > dirs.txt
+          echo "== Ordner im Hauptverzeichnis =="; cat dirs.txt
+          echo; echo "== Installationen (api.php gefunden) =="
+          lftp -u "$USER,$PASS" "sftp://$HOST" -e "set sftp:auto-confirm yes; set net:max-retries 2; find -d 6 /kohlfahrten ; bye" 2>/dev/null | grep -E '/api\.php$|/config\.php$' | sed 's#^#  #' || true

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="bg" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#eaf8e3"/><stop offset="1" stop-color="#c9ecb9"/></radialGradient><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".95"/><stop offset=".5" stop-color="#e6f4ff" stop-opacity=".7"/><stop offset="1" stop-color="#cfe6f5" stop-opacity=".9"/></linearGradient><linearGradient id="liq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c2"/><stop offset="1" stop-color="#f2c94c"/></linearGradient></defs>
+<rect width="400" height="300" rx="24" fill="url(#bg)"/>
+<ellipse cx="200" cy="262" rx="130" ry="12" fill="#1e8c0b" opacity=".18"/>
+<g transform="translate(118 46)"><path d="M0 0 L164 0 L146 210 Q82 222 18 210 Z" fill="url(#gl)" stroke="#7aa6c2" stroke-width="3"/>
+<path d="M12 70 L152 70 L146 210 Q82 222 18 210 Z" fill="url(#liq)" opacity=".85"/>
+<rect x="22" y="96" width="120" height="74" rx="10" fill="#1e8c0b"/>
+<text x="82" y="125" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="22" fill="#fff">KOHLTOUR</text>
+<text x="82" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="#c9f2b0">Die Kohlköppe</text>
+<text x="82" y="190" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="#1e8c0b">★ 2027 ★</text>
+<path d="M14 10 L28 200" stroke="#fff" stroke-width="8" opacity=".6" stroke-linecap="round"/></g>
+<g transform="translate(300 60)"><circle r="34" fill="#ffd84d"/><text y="-4" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#3a2a00">MIT</text><text y="13" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#3a2a00">DRUCK</text></g>
+</svg>

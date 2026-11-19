@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="bg" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#eaf8e3"/><stop offset="1" stop-color="#c9ecb9"/></radialGradient><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#f3f3ee"/><stop offset="1" stop-color="#d9d9cf"/></linearGradient><linearGradient id="r" x1="0" x2="1"><stop offset="0" stop-color="#ff7a59"/><stop offset="1" stop-color="#d84315"/></linearGradient></defs>
+<rect width="400" height="300" rx="24" fill="url(#bg)"/>
+<ellipse cx="200" cy="262" rx="120" ry="12" fill="#1e8c0b" opacity=".18"/>
+<!-- Becher 1: Kuh -->
+<g transform="translate(70 70)"><path d="M10 20 Q8 150 20 170 Q65 190 110 170 Q122 150 120 20 Z" fill="url(#g)" stroke="#2f2f2f" stroke-width="3"/>
+<ellipse cx="65" cy="20" rx="55" ry="12" fill="#e8e8de" stroke="#2f2f2f" stroke-width="3"/><ellipse cx="65" cy="22" rx="44" ry="7" fill="#8d5524"/>
+<path d="M18 60 q20 -10 30 8 q-8 22 -30 14 Z M88 110 q20 -6 28 10 l-2 30 q-22 4 -30 -14 Z M40 140 q14 -6 22 6 q-6 14 -22 8 Z" fill="#2f2f2f"/>
+<circle cx="48" cy="92" r="6" fill="#2f2f2f"/><circle cx="84" cy="92" r="6" fill="#2f2f2f"/><circle cx="50" cy="90" r="2" fill="#fff"/><circle cx="86" cy="90" r="2" fill="#fff"/>
+<ellipse cx="66" cy="122" rx="24" ry="14" fill="#f8bbd0" stroke="#2f2f2f" stroke-width="2"/><circle cx="58" cy="122" r="3" fill="#2f2f2f"/><circle cx="74" cy="122" r="3" fill="#2f2f2f"/>
+<path d="M20 30 Q30 95 22 160" stroke="#fff" stroke-width="6" opacity=".7" fill="none" stroke-linecap="round"/></g>
+<!-- Becher 2: Kohlkopf -->
+<g transform="translate(220 92)"><path d="M8 16 Q6 128 16 146 Q55 162 94 146 Q104 128 102 16 Z" fill="url(#r)" stroke="#5d1a06" stroke-width="3"/>
+<ellipse cx="55" cy="16" rx="47" ry="10" fill="#ff8a65" stroke="#5d1a06" stroke-width="3"/><ellipse cx="55" cy="18" rx="37" ry="6" fill="#8d5524"/>
+<g fill="#2e7d32"><circle cx="40" cy="78" r="16"/><circle cx="62" cy="70" r="18"/><circle cx="76" cy="88" r="14"/><circle cx="52" cy="94" r="15"/></g>
+<g fill="#66bb6a"><circle cx="58" cy="66" r="6"/><circle cx="44" cy="80" r="4"/></g>
+<path d="M30 112 q25 16 50 0" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M18 26 Q26 80 20 136" stroke="#fff" stroke-width="5" opacity=".55" fill="none" stroke-linecap="round"/></g>
+<g fill="#ffd84d"><path d="M196 52 l5 12 13 1 -10 8 3 13 -11 -7 -11 7 3 -13 -10 -8 13 -1z"/><path d="M340 56 l3 8 9 1 -7 5 2 9 -7 -5 -7 5 2 -9 -7 -5 9 -1z"/></g>
+</svg>

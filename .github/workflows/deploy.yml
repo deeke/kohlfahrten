@@ -1,0 +1,84 @@
+# Lädt bei jeder Änderung im Branch "main" den Ordner public/ per SFTP zu Strato hoch.
+# config.php und uploads/ auf dem Server werden dabei NICHT angetastet.
+#
+# Einmalig in GitHub hinterlegen: Repository → Settings → Secrets and variables → Actions → "New repository secret"
+#   STRATO_SFTP_HOST   z. B. 5012345603.ssh.w2.strato.hosting   (Strato-Login → Datenbanken und Webspace → SFTP & SSH)
+#   STRATO_SFTP_USER   z. B. su123456
+#   STRATO_SFTP_PASS   SFTP-Passwort (bitte ohne Komma)
+#   (Zielordner steht unten fest im Schritt "Hochladen": /kohlfahrten/public)
+#   Erstinstallation: existiert der Zielordner noch nicht, wird er angelegt und befüllt.
+#   Danach config.php (aus config.sample.php) per SFTP in den Zielordner legen.
+name: Deploy zu Strato
+
+on:
+  push:
+    branches: [main]
+    paths: ['public/**', '.github/workflows/deploy.yml']
+  workflow_dispatch:
+
+concurrency: deploy-strato
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: PHP-Syntax prüfen
+        run: find public -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Zugangsdaten vorhanden?
+        id: check
+        env:
+          HOST: ${{ secrets.STRATO_SFTP_HOST }}
+        run: |
+          if [ -z "$HOST" ]; then
+            echo "::warning::Noch keine Strato-Zugangsdaten hinterlegt (Settings → Secrets and variables → Actions). Upload übersprungen."
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: lftp installieren
+        if: steps.check.outputs.skip != '1'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Hochladen (SFTP)
+        if: steps.check.outputs.skip != '1'
+        env:
+          HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          USER: ${{ secrets.STRATO_SFTP_USER }}
+          PASS: ${{ secrets.STRATO_SFTP_PASS }}
+          # Zielordner = Ordner, auf den die Kohlfahrten-Domain zeigt (dort liegt config.php)
+          DIR:  /kohlfahrten/public
+        run: |
+          # Eingaben bereinigen (z. B. "sftp://", Port oder Leerzeichen entfernen)
+          HOST=$(echo "$HOST" | sed -E 's#^[a-z]+://##; s#/.*$##; s#:[0-9]+$##' | tr -d '[:space:]')
+          USER=$(echo "$USER" | tr -d '[:space:]')
+          DIR=$(echo "$DIR" | tr -d '[:space:]')
+          if [ -z "$DIR" ]; then
+            echo "::error::Zielordner (DIR) fehlt. Ohne Zielordner wird aus Sicherheitsgründen nichts hochgeladen."
+            exit 1
+          fi
+          echo "Server: ${HOST:0:4}…  Zielordner: $DIR"
+          echo "Teste Erreichbarkeit von Port 22 …"
+          timeout 15 bash -c "</dev/tcp/$HOST/22" && echo "Port 22 erreichbar" || { echo "::error::Server $HOST ist auf Port 22 nicht erreichbar – STRATO_SFTP_HOST prüfen (Servername aus Strato-Login → SFTP & SSH)."; exit 1; }
+          SSHOPT="set sftp:auto-confirm yes; set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password,keyboard-interactive'; set net:max-retries 2; set net:timeout 30;"
+          CHECK="cls -1 $DIR/config.php"
+          LIST=$(lftp -u "$USER,$PASS" "sftp://$HOST" -e "$SSHOPT cls -1 $DIR/; bye" 2>/dev/null) || LIST="__fehlt__"
+          if [ "$LIST" = "__fehlt__" ] || [ -z "$(echo "$LIST" | tr -d '[:space:]')" ]; then
+            echo "Zielordner $DIR fehlt oder ist leer – Erstinstallation."
+            lftp -u "$USER,$PASS" "sftp://$HOST" -e "$SSHOPT mkdir -p $DIR; bye" || true
+            CHECK="echo Erstinstallation"
+          fi
+          lftp -u "$USER,$PASS" "sftp://$HOST" -e "
+            set sftp:auto-confirm yes;
+            set sftp:connect-program 'ssh -a -x -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password,keyboard-interactive';
+            set net:max-retries 2;
+            set net:timeout 30;
+            set net:reconnect-interval-base 5;
+            $CHECK || (echo 'ABBRUCH: im Zielordner liegt keine config.php – falscher Ordner?'; exit 1);
+            mirror --reverse --verbose --parallel=4 \
+              --exclude-glob config.php \
+              --exclude-glob uploads/ \
+              --exclude-glob .DS_Store \
+              public/ $DIR;
+            bye"
