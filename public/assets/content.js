@@ -45,7 +45,7 @@ const REGIONS = ['Emsland','Ostfriesland','Friesland','Oldenburger Land','Ammerl
 /* ---------- Kohlfahrten-Spiele ----------
    mat = Material, pers = Spieler, ort = draußen/drinnen, shop = passende Shop-Kategorie (siehe SHOP_CATS.k) */
 const GAMES = [
-  {t:'Boßeln', foto:'assets/img/fotos/sp-bosseln.jpg', i:'fa-bowling-ball', tag:'Klassiker', pers:'2 Teams à 4–10', ort:'Strecke', mat:'Boßelkugel(n), Kescher, ggf. Kreide', shop:'kugeln',
+  {t:'Boßeln', i:'fa-bowling-ball', tag:'Klassiker', pers:'2 Teams à 4–10', ort:'Strecke', mat:'Boßelkugel(n), Kescher, ggf. Kreide', shop:'kugeln',
    d:'Ziel ist es, eine festgelegte Strecke mit möglichst wenigen Würfen zu schaffen. Team A wirft zuerst, dann Team B. Jeder Wurf endet dort, wo die Kugel liegen bleibt – landet sie im Graben, wird an der Straße weitergeworfen. Es wirft immer das Team, dessen Kugel zurückliegt.'},
   {t:'Teebeutel-Weitwurf', i:'fa-mug-hot', tag:'Klassiker', pers:'beliebig', ort:'Strecke', mat:'Teebeutel (nass oder trocken), Maßband',
    d:'Teebeutel an der Schnur nehmen, mit dem Mund festhalten und per Kopfschwung so weit wie möglich schleudern. Wer am weitesten wirft, gewinnt – nass fliegt er weiter, ist aber auch gemeiner.'},
@@ -55,7 +55,7 @@ const GAMES = [
    d:'Zwei Linien, zwei Bälle, zwei kräftige Puster: Wer seinen Ball zuerst über die Ziellinie pustet, gewinnt. Bei steigendem Promillewert wird es interessant.'},
   {t:'Ringe werfen', i:'fa-ring', tag:'Geschick', pers:'2 Teams', ort:'Strecke', mat:'2 Ringe (Draht), 2 Stäbe',
    d:'Aus festgelegter Entfernung werden Ringe auf einen Stab geworfen. Entweder entscheidet der erste Treffer oder ihr vergebt Punkte nach Distanz.'},
-  {t:'Sackhüpfen', foto:'assets/img/fotos/sp-sackhuepfen.jpg', i:'fa-person-running', tag:'Bewegung', pers:'beliebig', ort:'Wiese / Weg', mat:'Kartoffelsäcke',
+  {t:'Sackhüpfen', i:'fa-person-running', tag:'Bewegung', pers:'beliebig', ort:'Wiese / Weg', mat:'Kartoffelsäcke',
    d:'In den Sack, Enden am Bauch festhalten und auf Kommando ins Ziel hüpfen. Als Paar-Variante oder mit Parcours noch lustiger.'},
   {t:'Besenwerfen', i:'fa-broom', tag:'Klassiker', pers:'2 Teams', ort:'Strecke', mat:'Besen ohne Stiel',
    d:'Wie Boßeln – nur mit einem Besen ohne Stiel. Jedes Team schleudert den Besen Richtung Ziel; wer hinten liegt, ist am Zug. Wer mit den wenigsten Würfen ankommt, gewinnt.'},
@@ -93,9 +93,9 @@ const GAMES = [
    d:'Zwei Kohlfahrer stehen sich gegenüber und schauen sich in die Augen. Wer zuerst zwinkert, hat verloren. Perfekt für die Wartezeit am Tresen.'},
   {t:'Kohlkönig-Wiegen', i:'fa-weight-scale', tag:'Königswahl', pers:'alle', ort:'Gasthaus', mat:'Personenwaage, Liste',
    d:'Alle werden vor und nach dem Grünkohlessen gewogen. Wer am meisten zugelegt hat, wird Kohlkönig bzw. Kohlkönigin – und organisiert die nächste Tour.', shop:'krone'},
-  {t:'Nageln', foto:'assets/img/fotos/sp-nageln.jpg', i:'fa-hammer', tag:'Duell', pers:'2–6 Spieler', ort:'Gaststätte / Hof', mat:'Baumstumpf, Hammer, lange Nägel',
+  {t:'Nageln', i:'fa-hammer', tag:'Duell', pers:'2–6 Spieler', ort:'Gaststätte / Hof', mat:'Baumstumpf, Hammer, lange Nägel',
    d:'Jeder bekommt einen Nagel, gehämmert wird reihum mit genau einem Schlag pro Runde. Wer seinen Nagel zuerst ganz im Holz versenkt, gewinnt. Mit Abstand spielen!'},
-  {t:'Dosenwerfen', foto:'assets/img/fotos/sp-dosen.jpg', i:'fa-bullseye', tag:'Geschick', pers:'beliebig', ort:'Strecke / Saal', mat:'10 leere Dosen, 3 Bälle',
+  {t:'Dosenwerfen', i:'fa-bullseye', tag:'Geschick', pers:'beliebig', ort:'Strecke / Saal', mat:'10 leere Dosen, 3 Bälle',
    d:'Dosenpyramide aufbauen und mit drei Würfen so viele Dosen wie möglich abräumen. Jeder Treffer zählt fürs Team – der Klassiker für zwischendurch.'}
 ];
 
@@ -110,7 +110,5 @@ const KING_METHODS = [
 /* ---------- Fotos (aus dem bisherigen Kohlfahrten.de-Auftritt) ---------- */
 const PHOTOS = {
   start: [['kf-gruppe','Mit Bollerwagen und Warnweste unterwegs'],['kf-gruenkohl','Grünkohl mit Pinkel, Kassler & Kartoffeln'],['sp-bosseln','Boßeln auf der Strecke'],['kf-westen','Kohltour-Westen'],['kf-gruppe2','Die ganze Truppe am Start'],['kf-weg','Auf zur Gaststätte']],
-  bollerwagen: [['bw-party','Party-Bollerwagen'],['bw-gruenkohl','Grünkohl on Tour'],['bw-holz','Klassischer Holz-Bollerwagen'],['bw-theke','Rollende Theke'],['bw-box','Bollerwagen mit Getränkebox'],['bw-detail','Gläserhalter im Bollerwagen']],
-  spiele: [['sp-bosseln','Boßeln'],['sp-sackhuepfen','Sackhüpfen'],['sp-dosen','Dosenwerfen'],['sp-nageln','Nageln'],['sp-werfen','Weitwurf'],['sp-gruppe','Spielestation unterwegs']],
   infos: [['kf-gruenkohl','Grünkohl'],['kf-gruppe','Kohltour'],['kf-weg','Unterwegs']]
 };

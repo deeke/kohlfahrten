@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-const APP_VERSION = '1.0.2';
+const APP_VERSION = '1.0.3';
 const MAX_PHOTOS  = 2;
 const RAFFLE_END  = '2000-01-01 00:00:00';   // Kein Gewinnspiel auf Kohlfahrten.de (Funktion deaktiviert)
 const MAX_PHOTO_BYTES = 6 * 1024 * 1024;
@@ -260,7 +260,7 @@ function clean(string $type, array $in): array {
             'quelle' => url($in['quelle'] ?? ''),
             'foto' => preg_match('~^(assets/img/fotos/[a-z0-9-]+\.jpg|uploads/[A-Za-z0-9-]+\.(jpg|png|webp))$~', (string)($in['foto'] ?? '')) ? (string)$in['foto'] : '',
             'saal' => numOrEmpty($in['saal'] ?? ''), 'kohlfahrt' => !empty($in['kohlfahrt']),
-            'preis' => numOrEmpty($in['preis'] ?? ''), 'saison' => str($in['saison'] ?? '', 60),
+            'preis' => '', 'saison' => str($in['saison'] ?? '', 60),
             'minPers' => numOrEmpty($in['minPers'] ?? ''), 'kohlText' => str($in['kohlText'] ?? '', 2000),
             'inkl' => keys($in['inkl'] ?? []),
         ];
@@ -322,8 +322,26 @@ function deletePhoto(string $p): void {
 /* ------------------------------------------------------------------ */
 /* Einträge lesen / schreiben                                          */
 /* ------------------------------------------------------------------ */
+/** Kohlfahrten.de zeigt bei Gaststätten keine Preise – auch nicht aus älteren Einträgen. */
+function noPrices(array $d): array {
+    static $map = [
+        'Boßelpartys von Mitte Februar bis Ende März: Essen ab 20 € p. P., All-in-Paket ca. 60 € p. P.' => 'Boßelpartys von Mitte Februar bis Ende März – Essen oder All-in-Paket buchbar.',
+        'Kohlfahrt als geführte Boßeltour – all-inclusive bis 1 Uhr, mit Übernachtung und Katerfrühstück (EZ-Zuschlag 10 €).' => 'Kohlfahrt als geführte Boßeltour – all-inclusive bis 1 Uhr, mit Übernachtung und Katerfrühstück.',
+        'Boßelpaket für 10–26 Personen inkl. 2 Übernachtungen und 3-Gänge-Grünkohlmenü (EZ-Zuschlag 55 €).' => 'Boßelpaket für 10–26 Personen inkl. 2 Übernachtungen und 3-Gänge-Grünkohlmenü.',
+        'Grünkohl im historischen Bauernhaus (Preis für das Grünkohlgericht).' => 'Grünkohl im historischen Bauernhaus.',
+        'Grünkohl satt 22 € p. P., mit 6 Stunden Getränken 55 € p. P. Saal für 10–250 Personen.' => 'Grünkohl satt, auf Wunsch mit Getränkepaket. Saal für 10–250 Personen.',
+        'Ostfriesischer Grünkohl (Preis für das Gericht).' => 'Ostfriesischer Grünkohl.',
+        'Kohlparty 18–24 Uhr mit Grünkohl, Pinkel, Musik und Tanz – all-inclusive 70 € (Fr) / 75 € (Sa).' => 'Kohlparty 18–24 Uhr mit Grünkohl, Pinkel, Musik und Tanz – all-inclusive.',
+        'Braunkohlteller (Preis für das Gericht).' => 'Braunkohlteller.',
+        'Arrangement „Grünkohltour“ mit Übernachtung (Preis p. P. im DZ): Grünkohl mit Kassler & Pinkel, Ausflugsziele wie Berentzen-Hof und Schloss Clemenswerth.' => 'Arrangement „Grünkohltour“ mit Übernachtung: Grünkohl mit Kassler & Pinkel, Ausflugsziele wie Berentzen-Hof und Schloss Clemenswerth.',
+    ];
+    $d['preis'] = '';
+    if (isset($d['kohlText'], $map[$d['kohlText']])) $d['kohlText'] = $map[$d['kohlText']];
+    return $d;
+}
 function rowToItem(array $r, bool $admin): array {
     $d = json_decode($r['data'], true) ?: [];
+    if ($r['type'] === 'gasthaus') $d = noPrices($d);
     $d['id'] = $r['id']; $d['status'] = $r['status'];
     $d['created'] = strtotime($r['created']) * 1000;
     $d['author'] = $r['author'];
