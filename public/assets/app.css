@@ -488,3 +488,41 @@ details.faq summary{cursor:pointer;font-weight:800}
 .game .gfoto{width:calc(100% + 32px);margin:-16px -16px 4px;height:160px;object-fit:cover;display:block;border-radius:16px 16px 0 0}
 .shop-cat .scfoto{width:64px;height:64px;border-radius:12px;object-fit:cover;flex:none}
 .premium img{object-fit:cover}
+
+/* ---------- 1.0.4: Foto-Banner & dunkleres Design ---------- */
+:root{--kf:#17700a;--grass-d:#17700a;--ink:#122e0e;--muted:#4c6146;--grass-l:#e2efdb;--line:#c9dcbf}
+body{background:linear-gradient(#dfe8da,#d3dfcc 600px) fixed}
+a{color:#145f09}
+header.top{background:#fff;box-shadow:0 2px 16px rgba(10,40,5,.25)}
+.card,.game,.ecard{border-color:#cfdfc6;box-shadow:0 4px 16px rgba(15,50,10,.10)}
+.sec-head h2,section.block>h2{color:#123510}
+.btn{background:#17700a}
+.btn:hover{filter:brightness(1.1)}
+footer{background:linear-gradient(#1d5c12,#0d3108)}
+footer svg path{fill:#1d5c12}
+.hero.photo{background:#0d2408 url(img/fotos/hero-gruppe.jpg) center 35%/cover no-repeat;padding:96px 0 104px;min-height:430px}
+.hero.photo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,22,4,.82) 0%,rgba(6,22,4,.55) 45%,rgba(6,22,4,.15) 100%),linear-gradient(transparent 60%,rgba(6,22,4,.45))}
+.hero.photo h1{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+.hero.photo h1 span{color:#9be26f}
+.hero.photo p.lead{color:#eef7e8;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hero.photo .btn.ghost{background:rgba(255,255,255,.92);color:#17700a;border-color:transparent}
+@media(max-width:820px){.hero.photo{padding:56px 0 64px;min-height:0;background-position:30% center}}
+/* Premium-Banner im Format 500 x 97 px */
+.premium-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,500px),500px));justify-content:center;gap:14px}
+.premium{min-height:0;width:100%;max-width:500px;aspect-ratio:500/97;padding:10px 16px 10px 18px;justify-content:center;border-radius:12px;background:linear-gradient(120deg,#0f4a08,#17700a 60%,#3f9a25)}
+.premium::after{display:none}
+.premium img{z-index:0}
+.premium img~*{text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.premium h3{font-size:1.05rem;line-height:1.15;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:60px}
+.premium p{font-size:.8rem;margin:2px 0 0;position:relative;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.premium p+p{display:none}
+.premium .pbadge{top:8px;left:auto;right:10px;font-size:.68rem;padding:2px 8px}
+.premium .pdeco{font-size:4.5rem;right:8px;top:auto;bottom:-14px;opacity:.14}
+.premium.empty{flex-direction:row;gap:12px;justify-content:center;align-items:center;text-align:left;color:#17700a;border-color:#9fcb8a}
+.premium.empty i{font-size:1.5rem!important}
+.premium.empty h3{font-size:1rem;padding:0;color:#17700a;text-shadow:none}
+.premium.empty p{display:block;color:#4c6146;text-shadow:none;font-size:.78rem}
+.premium .pshade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,25,3,.85),rgba(5,25,3,.35));z-index:0}
+.premium.has-banner{padding:0}
+.premium.has-banner img{position:static;width:100%;height:100%;object-fit:cover}
+.premium.has-banner .pbadge{background:rgba(255,255,255,.85);color:#333;font-weight:700}

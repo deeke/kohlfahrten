@@ -538,13 +538,13 @@ function renderStart(){
 function isPremium(g){return g.premium&&(!g.premiumBis||new Date(g.premiumBis+'T23:59:59')>=new Date());}
 function renderPremium(){
   const ps=approved('gasthaus').filter(isPremium);
-  const free=Math.max(0,3-ps.length);
-  $('#premiumHost').innerHTML=ps.map(g=>`<a class="premium" href="${g.web?esc(safeUrl(g.web)):'#gaststaetten'}" ${g.web?'target="_blank" rel="noopener"':''}>
-      ${g.bannerImg||g.foto?`<img src="${esc(g.bannerImg||g.foto)}" alt="">`:`<i class="fa-solid fa-utensils pdeco"></i>`}
-      <span class="pbadge"><i class="fa-solid fa-star"></i> Tipp</span>
-      <h3>${esc(g.name)}</h3><p><i class="fa-solid fa-location-dot"></i> ${esc(g.ort)}${g.region?' · '+esc(g.region):''}</p>
-      ${g.bannerText?`<p>${esc(g.bannerText)}</p>`:g.kohlfahrt?`<p><i class="fa-solid fa-leaf"></i> Kohlfahrt-Angebot</p>`:''}</a>`).join('')
-    +Array.from({length:free},()=>`<a class="premium empty" href="#banner"><i class="fa-solid fa-bullhorn" style="font-size:2rem"></i><h3>Ihre Gaststätte hier?</h3><p>Premium-Banner für die Kohlfahrt-Saison buchen</p></a>`).join('');
+  const free=ps.length<4?4-ps.length:ps.length%2;
+  $('#premiumHost').innerHTML=ps.map(g=>{const href=g.web?esc(safeUrl(g.web)):'#gaststaetten',tgt=g.web?'target="_blank" rel="noopener"':'';
+      if(g.bannerImg)return `<a class="premium has-banner" href="${href}" ${tgt} title="${esc(g.name)}"><img src="${esc(g.bannerImg)}" alt="${esc(g.name)}"><span class="pbadge">Anzeige</span></a>`;
+      return `<a class="premium" href="${href}" ${tgt}>${g.foto?`<img src="${esc(g.foto)}" alt=""><span class="pshade"></span>`:`<i class="fa-solid fa-utensils pdeco"></i>`}
+      <span class="pbadge">Anzeige</span>
+      <h3>${esc(g.name)}</h3><p><i class="fa-solid fa-location-dot"></i> ${esc(g.ort)}${g.bannerText?' · '+esc(g.bannerText):g.region?' · '+esc(g.region):''}</p></a>`;}).join('')
+    +Array.from({length:free},()=>`<a class="premium empty" href="#banner"><i class="fa-solid fa-bullhorn"></i><div><h3>Ihre Gaststätte hier?</h3><p>Premium-Banner (500 × 97 px) für die Kohlfahrt-Saison buchen</p></div></a>`).join('');
 }
 const startLayers={routes:true,gasthaus:true,bossel:true,verleih:true};
 function renderStartMap(){
@@ -863,7 +863,7 @@ function openEntityForm(type,item=null,admin=false){
           <label class="check" style="margin:0"><input type="checkbox" name="premium" ${x.premium?'checked':''}> <b><i class="fa-solid fa-star" style="color:#e0a800"></i> Premium-Banner (bezahlt) – auf der Startseite und oben in der Liste</b></label>
           <div class="row3" style="grid-template-columns:1fr 2fr"><div><label class="fl"><i class="fa-solid fa-calendar"></i> Banner bis</label><input type="date" name="premiumBis" value="${esc(x.premiumBis??'')}"></div>
           <div><label class="fl"><i class="fa-solid fa-quote-left"></i> Werbetext</label><input type="text" name="bannerText" maxlength="120" value="${esc(x.bannerText??'')}" placeholder="z. B. Kohlfahrt mit Live-Musik – jetzt Termine sichern!"></div></div>
-          <label class="fl"><i class="fa-solid fa-image"></i> Bannerbild (Querformat)</label>
+          <label class="fl"><i class="fa-solid fa-image"></i> Bannerbild (500 × 97 Pixel)</label>
           <div class="btnrow"><input type="file" name="bannerFile" accept="image/*" style="max-width:320px"><span class="muted" style="font-size:.85rem">${x.bannerImg?'Aktuelles Bild vorhanden – neues Bild ersetzt es.':'Ohne Bild wird ein grüner Banner angezeigt.'}</span>${x.bannerImg?'<label class="check" style="margin:0"><input type="checkbox" name="bannerDel"> Bild entfernen</label>':''}</div>
         </div>`:''}
         <label class="fl"><i class="fa-solid fa-list-check"></i> Leistungen &amp; Inklusive</label>
@@ -899,7 +899,7 @@ function openEntityForm(type,item=null,admin=false){
       d.bossel=form.bossel.checked;d.bosselText=form.bosselText.value.trim();d.region=form.region.value;d.quelle=form.quelle.value.trim();
       if(admin){d.premium=form.premium.checked;d.premiumBis=form.premiumBis.value;d.bannerText=form.bannerText.value.trim();
         d.bannerImg=x.bannerImg||'';if(form.bannerDel&&form.bannerDel.checked)d.bannerImg='';
-        const bf=form.bannerFile.files[0];if(bf){try{d.bannerImg=await readPhoto(bf,1600);}catch(e2){return fail('Bannerbild konnte nicht gelesen werden.');}}}}
+        const bf=form.bannerFile.files[0];if(bf){try{d.bannerImg=await readPhoto(bf,1000);}catch(e2){return fail('Bannerbild konnte nicht gelesen werden.');}}}}
     else{d.beschreibung=form.beschreibung.value.trim();d.ausst=$$('[name=ausst]:checked',form).map(i=>i.value);}
     const sb=$('button[type=submit]',form);
     if(admin){d.status=form.status.value;d.id=item?.id;

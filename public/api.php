@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-const APP_VERSION = '1.0.3';
+const APP_VERSION = '1.0.4';
 const MAX_PHOTOS  = 2;
 const RAFFLE_END  = '2000-01-01 00:00:00';   // Kein Gewinnspiel auf Kohlfahrten.de (Funktion deaktiviert)
 const MAX_PHOTO_BYTES = 6 * 1024 * 1024;
